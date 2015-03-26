@@ -156,15 +156,23 @@ namespace ImageRenamer
             foreach (String filePath in Directory.GetFiles(FolderPath, "*.jpg"))
             {
 
-                OriginalFileName = Path.GetFileName(filePath);
-                NewFileName = i + ".jpg";
-                mItemsList.Add(new MyFileItem(OriginalFileName, filePath, NewFileName));
+                try {
+                    OriginalFileName = Path.GetFileName(filePath);
+                    NewFileName = i + ".jpg";
+                    mItemsList.Add(new MyFileItem(OriginalFileName, filePath, NewFileName));
+
+                    mImageList.Images.Add(Image.FromFile(filePath));
+
+                    FlowImagePanel.Controls.Add(new ImageHolder(mImageList.Images[i], OriginalFileName));
+                    imagesCheckBoxList.Items.Add(NewFileName + "(" + OriginalFileName + ")");
+
+                    i++;
+                }
+                catch (OutOfMemoryException e) { 
+                    MessageBox.Show("Тръде много снимки. Не достига памет!");
+                    break;
+                }
                 
-                mImageList.Images.Add(Image.FromFile(filePath));
-                FlowImagePanel.Controls.Add(new ImageHolder(mImageList.Images[i],OriginalFileName));
-                imagesCheckBoxList.Items.Add(NewFileName + "(" + OriginalFileName + ")");
-                
-                i++;
             }
 
             //Hide wait form.
