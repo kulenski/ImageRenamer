@@ -59,15 +59,5 @@ namespace ImageRenamer.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Metropolis_Dark {
-            get {
-                object obj = ResourceManager.GetObject("Metropolis Dark", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
     }
 }
