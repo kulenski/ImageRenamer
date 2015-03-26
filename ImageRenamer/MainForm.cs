@@ -168,7 +168,8 @@ namespace ImageRenamer
             }
 
             //Hide wait form.
-            WaitForm.HideWaitForm();
+            //WaitForm.HideWaitForm();
+            // WaitForm does not hide properly.. need more work.
         }
 
         //private void PopulateItemList(string FolderPath)
