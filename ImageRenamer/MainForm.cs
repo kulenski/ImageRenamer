@@ -68,10 +68,6 @@ namespace ImageRenamer
             } else { 
                 SelectedFolder = mDialog.SelectedPath;
                 updateWindowTitle(SelectedFolder);
-                //PopulateItemList(SelectedFolder);
-                //PopulateCheckBoxList();
-                //LoadThumbnails(SelectedFolder);
-
                 PopulateControls(SelectedFolder);
             }
         }
@@ -179,43 +175,6 @@ namespace ImageRenamer
             //WaitForm.HideWaitForm();
             // WaitForm does not hide properly.. need more work.
         }
-
-        //private void PopulateItemList(string FolderPath)
-        //{
-
-        //    String OriginalFileName,NewFileName;
-        //    int i = 0;
-        //    // Clear previously saved list
-        //    mItemsList.Clear();
-        //    foreach (String filePath in Directory.GetFiles(FolderPath, "*.jpg"))
-        //    {
-        //        Image mImage = Image.FromFile(filePath);
-        //        mImageList.Images.Add(mImage);
-
-        //        OriginalFileName = Path.GetFileName(filePath);
-        //        NewFileName = i + ".jpg";
-        //        mItemsList.Add(new MyFileItem(OriginalFileName, filePath, NewFileName));
-        //        i++;
-                
-        //    }
-        //}
-
-        //private void PopulateCheckBoxList()
-        //{
-        //    if (mItemsList.Count > 0)
-        //    {
-        //        imagesCheckBoxList.Items.Clear();
-        //        foreach (MyFileItem temp in mItemsList) 
-        //            imagesCheckBoxList.Items.Add(temp.NewName);
-        //    }
-           
-        //}
-
-        //private void LoadThumbnails(String FolderName)
-        //{
-        //    foreach (Image mImage in mImageList.Images)
-        //        FlowImagePanel.Controls.Add(new ImageHolder(mImage));
-        //}
 
         public int PerformRename()
         {
