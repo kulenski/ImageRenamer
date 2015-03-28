@@ -13,7 +13,11 @@ using System.Threading;
 
 namespace ImageRenamer
 {
-    public partial class MainForm : Form, IMessageFilter 
+    public partial class MainForm : Form, 
+        IMessageFilter, 
+        ImageHolder.OnRackButtonListener, 
+        ImageHolder.OnRackSubButtonListener, 
+        ImageHolder.OnViewButtonListener
     {
         public String SelectedFolder = "";
         public List<ImageItem> mItemsList;
@@ -36,6 +40,8 @@ namespace ImageRenamer
             Application.AddMessageFilter(this);
         }
 
+       #region MainForm UI interactions
+
         /*
          *  UI events
          */
@@ -56,7 +62,6 @@ namespace ImageRenamer
             } else { 
                 SelectedFolder = mDialog.SelectedPath;
                 updateWindowTitle(SelectedFolder);
-                //BackgroundImageLoader.RunWorkerAsync();
                 PopulateControls(SelectedFolder);
             }
         }
@@ -83,14 +88,9 @@ namespace ImageRenamer
             FlowImagePanel.Height = MainForm.ActiveForm.Height - FlowImagePanel.Top - 40;
             FlowImagePanel.Width = MainForm.ActiveForm.Width - FlowImagePanel.Left - 20;
         }
+        #endregion
 
-
-        private void BackgroundImageLoader_DoWork(object sender, DoWorkEventArgs e)
-        {
-            PopulateControls(SelectedFolder);
-        }
-
-
+       #region MouseWheel hack
         /*
          * [MouseWheel]
          *  Application.AddMessageFilter(this) is added in MainForm constructor
@@ -123,34 +123,34 @@ namespace ImageRenamer
                 private static extern IntPtr WindowFromPoint(Point pt);
                 [DllImport("user32.dll")]
                 private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wp, IntPtr lp);
+        #endregion
 
+       #region ImageHolder callbacks
 
         /*
          * 
-         * Public methods that will be used outside of MainForm
+         * ImagerHolder callback interface implementations
          * 
-         */
+         */ 
 
-                public int getRackCount() { return this.RackCount; }
-                public int getRackSubCount() { return this.RackSubCount; }
-                public int getViewCount() { return this.ViewCount; }
+        public void onRackButtonClick(ImageItem tItem) 
+        {
+            MessageBox.Show("Rack");
+        }
 
-                public void increaseRackCounter() { this.RackCount++; }
-                public void increaseRackSubCounter() { this.RackSubCount++;  }
-                public void increaseViewCounter() {this.ViewCount++; }
+        public void onRackSubButtonClick(ImageItem tItem)
+        {
+            MessageBox.Show("RackSub");
+        }
 
-                public void updateItemsList(ImageItem mItem)
-                {
-                    int index;
-                    for (index = 0; index < mItemsList.Count; index++)
-                    {
-                        if (mItemsList[index].getOriginalName().Equals(mItem.getOriginalName())) break;
-                    }
+        public void onViewButtonClick(ImageItem tItem)
+        {
+            MessageBox.Show("View");
+        }
 
-                    mItemsList.RemoveAt(index);
-                    mItemsList.Add(mItem);
-                }
+        #endregion
 
+       #region HelperFunctions
         /*
          * Functions
          */
@@ -160,9 +160,6 @@ namespace ImageRenamer
             int i = 0;
             // Clear previously saved list
             mItemsList.Clear();
-
-            //// Show wait form.
-            //WaitForm.StartWaitForm();
             foreach (String filePath in Directory.GetFiles(FolderPath, "*.jpg"))
             {
 
@@ -178,10 +175,6 @@ namespace ImageRenamer
                 }
                 
             }
-
-            ////Hide wait form.
-            //WaitForm.HideWaitForm();
-            //// WaitForm does not hide properly.. need more work.
         }
 
         public int PerformRename()
@@ -215,6 +208,7 @@ namespace ImageRenamer
         {
             MainForm.ActiveForm.Text = "ImageRenamer: " + title;
         }
-        
+
+        #endregion
     }
 }

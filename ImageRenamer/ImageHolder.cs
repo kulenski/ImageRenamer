@@ -13,6 +13,9 @@ namespace ImageRenamer
     public partial class ImageHolder : UserControl
     {
         private ImageItem currentItem;
+        private OnRackButtonListener mRackButtonListener;
+        private OnRackSubButtonListener mRackSubButtonListener;
+        private OnViewButtonListener mViewButtonListener;
 
         public ImageHolder(Image mImage, ImageItem mItem)
         {
@@ -24,27 +27,42 @@ namespace ImageRenamer
                 OriginalName.Text = mItem.getOriginalName();
                 this.currentItem = mItem;
             }
+
+            this.mRackButtonListener = (OnRackButtonListener)MainForm.ActiveForm;
+            this.mRackSubButtonListener = (OnRackSubButtonListener)MainForm.ActiveForm;
+            this.mViewButtonListener = (OnViewButtonListener)MainForm.ActiveForm;
             
         }
 
         //dummy
         private void RackButton_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Rack");
+            mRackButtonListener.onRackButtonClick(currentItem);
         }
         
         //dummy
         private void ViewButton_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("View");
+            mViewButtonListener.onViewButtonClick(currentItem);
         }
 
         //dummy
         private void RackSubButton_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("RackSub");
+            mRackSubButtonListener.onRackSubButtonClick(currentItem);
             
         }
+
+
+        /*
+         * 
+         *  Callback interface
+         * 
+         */
+
+        public interface OnRackButtonListener { void onRackButtonClick(ImageItem mItem); }
+        public interface OnRackSubButtonListener { void onRackSubButtonClick(ImageItem mItem); }
+        public interface OnViewButtonListener { void onViewButtonClick(ImageItem mItem); }
        
     }
 }
