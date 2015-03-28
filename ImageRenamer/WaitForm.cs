@@ -34,6 +34,7 @@ namespace ImageRenamer
             mThread.IsBackground = true;
             mThread.SetApartmentState(ApartmentState.STA);
             mThread.Start();
+
             while (mWaitForm == null || mWaitForm.IsHandleCreated == false)
             {
                 System.Threading.Thread.Sleep(50);
@@ -42,6 +43,7 @@ namespace ImageRenamer
 
         static public void HideWaitForm()
         {
+            mWaitForm.Close();
             mThread = null;
             mWaitForm = null;
         }

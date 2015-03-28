@@ -9,36 +9,24 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Threading;
 
 namespace ImageRenamer
 {
     public partial class MainForm : Form, IMessageFilter 
     {
         public String SelectedFolder = "";
-        public List<MyFileItem> mItemsList;
+        public List<ImageItem> mItemsList;
         public ImageList mImageList;
-
-        public class MyFileItem
-        {
-            public String OriginalName;
-            public String Path;
-            public String NewName;
-            public int ImageListId = -1;
-
-            public MyFileItem(String original, String path, String newname)
-            {
-                this.OriginalName = original;
-                this.Path = path;
-                this.NewName = newname;
-            }
-
-        }
+        public int ViewCount = 1;
+        public int RackCount = 1;
+        public int RackSubCount = 1;
 
         public MainForm()
         {
             InitializeComponent();
             //updateWindowTitle("няма избрана папка!");
-            mItemsList = new List<MyFileItem>();
+            mItemsList = new List<ImageItem>();
             mImageList = new ImageList();
             mImageList.ImageSize = new Size(256, 256);
             mImageList.ColorDepth = ColorDepth.Depth32Bit;
@@ -68,20 +56,17 @@ namespace ImageRenamer
             } else { 
                 SelectedFolder = mDialog.SelectedPath;
                 updateWindowTitle(SelectedFolder);
+                //BackgroundImageLoader.RunWorkerAsync();
                 PopulateControls(SelectedFolder);
             }
         }
 
         private void RenameButton_Click(object sender, EventArgs e)
         {
-            int i = PerformRename();
-            if (i > 0) MessageBox.Show(i + " файлове бяха преименувани!");
+            //int i = PerformRename();
+            //if (i > 0) MessageBox.Show(i + " файлове бяха преименувани!");
         }
 
-        private void imagesCheckBoxList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
@@ -95,9 +80,14 @@ namespace ImageRenamer
         // Performs dynamic arrangement of the UI controls
         private void MainForm_Resize(object sender, EventArgs e)
         {
-            imagesCheckBoxList.Height = MainForm.ActiveForm.Height - imagesCheckBoxList.Top - 40;
-            FlowImagePanel.Height = MainForm.ActiveForm.Height - FlowImagePanel.Top - 50;
+            FlowImagePanel.Height = MainForm.ActiveForm.Height - FlowImagePanel.Top - 40;
             FlowImagePanel.Width = MainForm.ActiveForm.Width - FlowImagePanel.Left - 20;
+        }
+
+
+        private void BackgroundImageLoader_DoWork(object sender, DoWorkEventArgs e)
+        {
+            PopulateControls(SelectedFolder);
         }
 
 
@@ -142,26 +132,19 @@ namespace ImageRenamer
 
         private void PopulateControls(string FolderPath)
         {
-            String OriginalFileName, NewFileName;
             int i = 0;
             // Clear previously saved list
             mItemsList.Clear();
 
-            // Show wait form.
-            WaitForm.StartWaitForm();
+            //// Show wait form.
+            //WaitForm.StartWaitForm();
             foreach (String filePath in Directory.GetFiles(FolderPath, "*.jpg"))
             {
 
                 try {
-                    OriginalFileName = Path.GetFileName(filePath);
-                    NewFileName = i + ".jpg";
-                    mItemsList.Add(new MyFileItem(OriginalFileName, filePath, NewFileName));
-
+                    mItemsList.Add(new ImageItem(filePath));
                     mImageList.Images.Add(Image.FromFile(filePath));
-
-                    FlowImagePanel.Controls.Add(new ImageHolder(mImageList.Images[i], OriginalFileName));
-                    imagesCheckBoxList.Items.Add(NewFileName + "(" + OriginalFileName + ")");
-
+                    FlowImagePanel.Controls.Add(new ImageHolder(mImageList.Images[i], mItemsList[i]));
                     i++;
                 }
                 catch (OutOfMemoryException e) { 
@@ -171,22 +154,22 @@ namespace ImageRenamer
                 
             }
 
-            //Hide wait form.
+            ////Hide wait form.
             //WaitForm.HideWaitForm();
-            // WaitForm does not hide properly.. need more work.
+            //// WaitForm does not hide properly.. need more work.
         }
 
         public int PerformRename()
         {
             int counter = 0;
             String OriginalPath, NewPath;
-            foreach (MyFileItem mItem in mItemsList)
+            foreach (ImageItem mItem in mItemsList)
             {
+                OriginalPath = mItem.getOriginalPath();
+                NewPath = mItem.getNewPath();
                 // skip identical items
-                if (mItem.OriginalName.Equals(mItem.NewName)) continue;
+                if (OriginalPath.Equals(NewPath)) continue;
                 // rename others
-                OriginalPath = Directory.GetParent(mItem.Path) + "\\" + mItem.OriginalName;
-                NewPath = Directory.GetParent(mItem.Path) + "\\" + mItem.NewName;
                 try
                 {
                     File.Move(OriginalPath, NewPath);
@@ -207,7 +190,6 @@ namespace ImageRenamer
         {
             MainForm.ActiveForm.Text = "ImageRenamer: " + title;
         }
-
         
     }
 }

@@ -10,21 +10,34 @@ using System.Windows.Forms;
 
 namespace ImageRenamer
 {
-    public partial class ImageHolder : Label
+    public partial class ImageHolder : UserControl
     {
-        public ImageHolder(Image mImage, string mTitle)
+        public ImageHolder(Image mImage, ImageItem mItem)
         {
             InitializeComponent();
-            this.Height = 280;
-            this.Width = 256;
-            this.TextAlign = ContentAlignment.BottomCenter;
-            this.BackColor = Color.Transparent;
-            
-            if (mImage == null) throw new NullReferenceException();
-            if (mTitle == null) throw new NullReferenceException();
 
-            this.Image = mImage;
-            this.Text = mTitle;
+            if (mImage != null) PictureBox.Image = mImage;
+            if (mItem != null) OriginalName.Text = mItem.getOriginalName();
         }
+
+
+        private void RackButton_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Rack");
+        }
+
+        private void ViewButton_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("View");
+        }
+
+        private void RackSubButton_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("RackSub");
+        }
+
+
+ 
+       
     }
 }

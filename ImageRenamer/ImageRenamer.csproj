@@ -44,17 +44,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ImageHolder.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ImageHolder.Designer.cs">
+      <DependentUpon>ImageHolder.cs</DependentUpon>
+    </Compile>
     <Compile Include="WaitForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="WaitForm.Designer.cs">
       <DependentUpon>WaitForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ImageHolder.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ImageHolder.Designer.cs">
-      <DependentUpon>ImageHolder.cs</DependentUpon>
     </Compile>
     <Compile Include="ImageItem.cs" />
     <Compile Include="MainForm.cs">
@@ -65,6 +65,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="ImageHolder.resx">
+      <DependentUpon>ImageHolder.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="WaitForm.resx">
       <DependentUpon>WaitForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -95,7 +98,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\" />
+    <None Include="Resources\AddRackSubButtonIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AddRackButtonIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AddViewButtonIcon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

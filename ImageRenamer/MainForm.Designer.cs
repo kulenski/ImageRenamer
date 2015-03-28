@@ -28,23 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.imagesCheckBoxList = new System.Windows.Forms.CheckedListBox();
             this.RenameButton = new System.Windows.Forms.Button();
             this.OpenFolderButton = new System.Windows.Forms.Button();
             this.PrefixBox = new System.Windows.Forms.TextBox();
             this.FlowImagePanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.BackgroundImageLoader = new System.ComponentModel.BackgroundWorker();
             this.SuspendLayout();
-            // 
-            // imagesCheckBoxList
-            // 
-            this.imagesCheckBoxList.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.imagesCheckBoxList.FormattingEnabled = true;
-            this.imagesCheckBoxList.Location = new System.Drawing.Point(13, 58);
-            this.imagesCheckBoxList.Name = "imagesCheckBoxList";
-            this.imagesCheckBoxList.ScrollAlwaysVisible = true;
-            this.imagesCheckBoxList.Size = new System.Drawing.Size(245, 529);
-            this.imagesCheckBoxList.TabIndex = 2;
-            this.imagesCheckBoxList.SelectedIndexChanged += new System.EventHandler(this.imagesCheckBoxList_SelectedIndexChanged);
             // 
             // RenameButton
             // 
@@ -82,10 +71,14 @@
             // 
             this.FlowImagePanel.AutoScroll = true;
             this.FlowImagePanel.BackColor = System.Drawing.Color.DimGray;
-            this.FlowImagePanel.Location = new System.Drawing.Point(265, 58);
+            this.FlowImagePanel.Location = new System.Drawing.Point(3, 55);
             this.FlowImagePanel.Name = "FlowImagePanel";
-            this.FlowImagePanel.Size = new System.Drawing.Size(537, 528);
+            this.FlowImagePanel.Size = new System.Drawing.Size(13, 10);
             this.FlowImagePanel.TabIndex = 4;
+            // 
+            // BackgroundImageLoader
+            // 
+            this.BackgroundImageLoader.DoWork += new System.ComponentModel.DoWorkEventHandler(this.BackgroundImageLoader_DoWork);
             // 
             // MainForm
             // 
@@ -98,7 +91,6 @@
             this.Controls.Add(this.PrefixBox);
             this.Controls.Add(this.OpenFolderButton);
             this.Controls.Add(this.RenameButton);
-            this.Controls.Add(this.imagesCheckBoxList);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Vivacom.RDNS ImageRenamer";
@@ -115,8 +107,8 @@
         private System.Windows.Forms.Button RenameButton;
         private System.Windows.Forms.Button OpenFolderButton;
         private System.Windows.Forms.TextBox PrefixBox;
-        private System.Windows.Forms.CheckedListBox imagesCheckBoxList;
         private System.Windows.Forms.FlowLayoutPanel FlowImagePanel;
+        private System.ComponentModel.BackgroundWorker BackgroundImageLoader;
     }
 }
 
