@@ -39,11 +39,11 @@
             // OriginalName
             // 
             this.OriginalName.AutoSize = true;
-            this.OriginalName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.OriginalName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.OriginalName.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.OriginalName.Location = new System.Drawing.Point(106, 260);
             this.OriginalName.Name = "OriginalName";
-            this.OriginalName.Size = new System.Drawing.Size(0, 16);
+            this.OriginalName.Size = new System.Drawing.Size(0, 18);
             this.OriginalName.TabIndex = 0;
             // 
             // RackSubButton
@@ -54,7 +54,6 @@
             this.RackSubButton.Size = new System.Drawing.Size(50, 50);
             this.RackSubButton.TabIndex = 2;
             this.RackSubButton.UseVisualStyleBackColor = true;
-            this.RackSubButton.Visible = false;
             this.RackSubButton.Click += new System.EventHandler(this.RackSubButton_Click);
             // 
             // ViewButton
@@ -65,7 +64,6 @@
             this.ViewButton.Size = new System.Drawing.Size(50, 50);
             this.ViewButton.TabIndex = 2;
             this.ViewButton.UseVisualStyleBackColor = true;
-            this.ViewButton.Visible = false;
             this.ViewButton.Click += new System.EventHandler(this.ViewButton_Click);
             // 
             // RackButton
@@ -76,7 +74,6 @@
             this.RackButton.Size = new System.Drawing.Size(50, 50);
             this.RackButton.TabIndex = 2;
             this.RackButton.UseVisualStyleBackColor = true;
-            this.RackButton.Visible = false;
             this.RackButton.Click += new System.EventHandler(this.RackButton_Click);
             // 
             // PictureBox
@@ -98,7 +95,7 @@
             this.Controls.Add(this.PictureBox);
             this.Controls.Add(this.OriginalName);
             this.Name = "ImageHolder";
-            this.Size = new System.Drawing.Size(262, 280);
+            this.Size = new System.Drawing.Size(262, 282);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

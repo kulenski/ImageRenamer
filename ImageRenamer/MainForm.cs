@@ -125,6 +125,31 @@ namespace ImageRenamer
                 private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wp, IntPtr lp);
 
 
+        /*
+         * 
+         * Public methods that will be used outside of MainForm
+         * 
+         */
+
+                public int getRackCount() { return this.RackCount; }
+                public int getRackSubCount() { return this.RackSubCount; }
+                public int getViewCount() { return this.ViewCount; }
+
+                public void increaseRackCounter() { this.RackCount++; }
+                public void increaseRackSubCounter() { this.RackSubCount++;  }
+                public void increaseViewCounter() {this.ViewCount++; }
+
+                public void updateItemsList(ImageItem mItem)
+                {
+                    int index;
+                    for (index = 0; index < mItemsList.Count; index++)
+                    {
+                        if (mItemsList[index].getOriginalName().Equals(mItem.getOriginalName())) break;
+                    }
+
+                    mItemsList.RemoveAt(index);
+                    mItemsList.Add(mItem);
+                }
 
         /*
          * Functions

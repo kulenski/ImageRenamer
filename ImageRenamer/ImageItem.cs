@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ImageRenamer
 {
-    class ImageItem
+    public partial class ImageItem
     {
         private String OriginalName;
         private String OriginalPath;
