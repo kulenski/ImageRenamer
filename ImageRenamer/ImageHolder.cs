@@ -38,21 +38,34 @@ namespace ImageRenamer
         private void RackButton_Click(object sender, EventArgs e)
         {
             mRackButtonListener.onRackButtonClick(currentItem);
+            updateItem();
         }
         
         //dummy
         private void ViewButton_Click(object sender, EventArgs e)
         {
             mViewButtonListener.onViewButtonClick(currentItem);
+            updateItem();
         }
 
         //dummy
         private void RackSubButton_Click(object sender, EventArgs e)
         {
             mRackSubButtonListener.onRackSubButtonClick(currentItem);
-            
+            updateItem();
         }
 
+        private void updateItem()
+        {
+            
+            RackButton.Enabled = false;
+            RackSubButton.Enabled = false;
+            ViewButton.Enabled = false;
+
+            RackButton.Visible = false;
+            RackSubButton.Visible = false;
+            ViewButton.Visible = false;
+        }
 
         /*
          * 

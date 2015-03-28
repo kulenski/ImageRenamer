@@ -19,12 +19,31 @@ namespace ImageRenamer
         ImageHolder.OnRackSubButtonListener, 
         ImageHolder.OnViewButtonListener
     {
-        public String SelectedFolder = "";
-        public List<ImageItem> mItemsList;
-        public ImageList mImageList;
-        public int ViewCount = 1;
-        public int RackCount = 1;
-        public int RackSubCount = 1;
+        private String SelectedFolder = "";
+        private List<ImageItem> mItemsList;
+        private ImageList mImageList;
+        private int ViewCount = 1;
+        private int RackCount = 1;
+        private int RackSubCount = 1;
+
+        // Properties
+        public  int ViewCounter
+        {
+            get { return this.ViewCount; }
+            
+        }
+
+        public int RackCounter
+        {
+            get { return this.RackCount; }
+            
+        }
+
+        public int RackSubCounter
+        {
+            get { return this.RackSubCount; }
+           
+        }
 
         public MainForm()
         {
@@ -68,8 +87,8 @@ namespace ImageRenamer
 
         private void RenameButton_Click(object sender, EventArgs e)
         {
-            //int i = PerformRename();
-            //if (i > 0) MessageBox.Show(i + " файлове бяха преименувани!");
+            int i = PerformRename();
+            if (i > 0) MessageBox.Show(i + " файлове бяха преименувани!");
         }
 
 
@@ -135,17 +154,24 @@ namespace ImageRenamer
 
         public void onRackButtonClick(ImageItem tItem) 
         {
-            MessageBox.Show("Rack");
+            updateItem(tItem, false);
+            this.RackCount++;
+            this.RackSubCount = 1;
+            //MessageBox.Show(RackCount.ToString() + " " + RackSubCount.ToString() + " " + ViewCount.ToString());
         }
 
         public void onRackSubButtonClick(ImageItem tItem)
         {
-            MessageBox.Show("RackSub");
+            updateItem(tItem, false);
+            this.RackSubCount++;
+            //MessageBox.Show(RackCount.ToString() + " " + RackSubCount.ToString() + " " + ViewCount.ToString());
         }
 
         public void onViewButtonClick(ImageItem tItem)
         {
-            MessageBox.Show("View");
+            updateItem(tItem, true);
+            this.ViewCount++;
+            //MessageBox.Show(RackCount.ToString() + " " + RackSubCount.ToString() + " " + ViewCount.ToString());
         }
 
         #endregion
@@ -154,6 +180,20 @@ namespace ImageRenamer
         /*
          * Functions
          */
+
+        private void updateItem(ImageItem mItem, Boolean isView) {
+            int index;
+            for (index = 0; index < mItemsList.Count; index++)
+            {
+                if (mItemsList.ElementAt(index).getOriginalName().Equals(mItem.getOriginalName())) break;
+            }
+            mItemsList.RemoveAt(index);
+
+            if (isView) mItem.setNewName("TEST", "View" + ViewCount + ".JPG");
+            else mItem.setNewName("TEST", RackCount + "." + RackSubCount + ".JPG");
+
+            mItemsList.Add(mItem);
+        }
 
         private void PopulateControls(string FolderPath)
         {
@@ -181,16 +221,21 @@ namespace ImageRenamer
         {
             int counter = 0;
             String OriginalPath, NewPath;
-            foreach (ImageItem mItem in mItemsList)
+            ImageItem mItem;
+            for (int index = 0; index < mItemsList.Count; index++)
             {
+                mItem = mItemsList.ElementAt(index);
+
                 OriginalPath = mItem.getOriginalPath();
                 NewPath = mItem.getNewPath();
                 // skip identical items
-                if (OriginalPath.Equals(NewPath)) continue;
+                if (NewPath == null || OriginalPath.Equals(NewPath)) continue;
                 // rename others
                 try
                 {
                     File.Move(OriginalPath, NewPath);
+                    // delete element from list, so user cannot rename it again.
+                    mItemsList.RemoveAt(index);
                     counter++;
                 }
                 catch (Exception e)
@@ -198,9 +243,8 @@ namespace ImageRenamer
                     MessageBox.Show("Съществува файл с такова име: " + NewPath);
                     counter--;
                 }
-                
-            }
 
+            }
             return counter;
         }
 

@@ -75,10 +75,7 @@
             this.FlowImagePanel.Name = "FlowImagePanel";
             this.FlowImagePanel.Size = new System.Drawing.Size(13, 10);
             this.FlowImagePanel.TabIndex = 4;
-            // 
-            // BackgroundImageLoader
-            // 
-            this.BackgroundImageLoader.DoWork += new System.ComponentModel.DoWorkEventHandler(this.BackgroundImageLoader_DoWork);
+           
             // 
             // MainForm
             // 

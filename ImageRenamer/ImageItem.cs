@@ -18,6 +18,7 @@ namespace ImageRenamer
             if (filepath == null) throw new ArgumentNullException("Path cannot be null!");
             this.OriginalPath = filepath;
             this.OriginalName = System.IO.Path.GetFileName(filepath);
+            this.NewName = this.OriginalName;
         }
 
         public String getNewName() { return this.NewName; }
@@ -26,7 +27,7 @@ namespace ImageRenamer
         {
             if (newName == null || prefix == null) throw new ArgumentNullException("New name cannot be null");
             this.NewName = prefix + "_" + newName;
-            this.NewPath = System.IO.Directory.GetParent(this.OriginalPath) + "\\" + newName;
+            this.NewPath = System.IO.Directory.GetParent(this.OriginalPath) + "\\" + this.NewName;
             
         }
 
