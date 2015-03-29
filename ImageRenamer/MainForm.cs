@@ -227,8 +227,8 @@ namespace ImageRenamer
 
                 try {
                     mInitialFileList.Add(new ImageItem(filePath));
-                    Image mThumbImage = Image.FromFile(filePath).GetThumbnailImage(256,256,()=>false,IntPtr.Zero);
-                    FlowImagePanel.Controls.Add(new ImageHolder(mThumbImage, mInitialFileList[i]));
+                    FlowImagePanel.Controls.Add(new ImageHolder(mInitialFileList[i]));
+                    
                     i++;
                 }
                 catch (OutOfMemoryException e) { 

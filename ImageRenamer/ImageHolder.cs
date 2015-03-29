@@ -17,24 +17,35 @@ namespace ImageRenamer
         private OnRackSubButtonListener mRackSubButtonListener;
         private OnViewButtonListener mViewButtonListener;
 
-        public ImageHolder(Image mImage, ImageItem mItem)
+        public ImageHolder(ImageItem mItem)
         {
             InitializeComponent();
 
             // Make shade transparent
             this.ShadeLayer.BackColor = Color.FromArgb(0, Color.Black);
 
-            if (mImage != null) PictureBox.Image = mImage;
+            
             if (mItem != null)
             {
                 OriginalName.Text = mItem.getOriginalName();
                 this.currentItem = mItem;
+                LoadImage();
             }
 
             this.mRackButtonListener = (OnRackButtonListener)MainForm.ActiveForm;
             this.mRackSubButtonListener = (OnRackSubButtonListener)MainForm.ActiveForm;
             this.mViewButtonListener = (OnViewButtonListener)MainForm.ActiveForm;
             
+        }
+
+
+        private void LoadImage()
+        {
+
+            Bitmap mBitmap = new Bitmap(currentItem.getOriginalPath());
+            Bitmap resizedBitmap = new Bitmap(mBitmap, new Size(256, 256));
+            PictureBox.Image = resizedBitmap;
+            mBitmap.Dispose();
         }
 
         //dummy
