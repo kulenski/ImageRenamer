@@ -32,13 +32,12 @@
             this.OpenFolderButton = new System.Windows.Forms.Button();
             this.PrefixBox = new System.Windows.Forms.TextBox();
             this.FlowImagePanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.BackgroundImageLoader = new System.ComponentModel.BackgroundWorker();
             this.SuspendLayout();
             // 
             // RenameButton
             // 
             this.RenameButton.BackColor = System.Drawing.Color.SkyBlue;
-            this.RenameButton.Location = new System.Drawing.Point(620, 12);
+            this.RenameButton.Location = new System.Drawing.Point(427, 12);
             this.RenameButton.Name = "RenameButton";
             this.RenameButton.Size = new System.Drawing.Size(182, 37);
             this.RenameButton.TabIndex = 3;
@@ -49,9 +48,9 @@
             // OpenFolderButton
             // 
             this.OpenFolderButton.BackColor = System.Drawing.Color.LightSteelBlue;
-            this.OpenFolderButton.Location = new System.Drawing.Point(432, 12);
+            this.OpenFolderButton.Location = new System.Drawing.Point(276, 12);
             this.OpenFolderButton.Name = "OpenFolderButton";
-            this.OpenFolderButton.Size = new System.Drawing.Size(182, 37);
+            this.OpenFolderButton.Size = new System.Drawing.Size(145, 37);
             this.OpenFolderButton.TabIndex = 0;
             this.OpenFolderButton.Text = "Open Folder";
             this.OpenFolderButton.UseVisualStyleBackColor = false;
@@ -64,7 +63,7 @@
             this.PrefixBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.PrefixBox.Location = new System.Drawing.Point(13, 17);
             this.PrefixBox.Name = "PrefixBox";
-            this.PrefixBox.Size = new System.Drawing.Size(413, 24);
+            this.PrefixBox.Size = new System.Drawing.Size(257, 24);
             this.PrefixBox.TabIndex = 1;
             // 
             // FlowImagePanel
@@ -75,7 +74,6 @@
             this.FlowImagePanel.Name = "FlowImagePanel";
             this.FlowImagePanel.Size = new System.Drawing.Size(13, 10);
             this.FlowImagePanel.TabIndex = 4;
-           
             // 
             // MainForm
             // 
@@ -105,7 +103,6 @@
         private System.Windows.Forms.Button OpenFolderButton;
         private System.Windows.Forms.TextBox PrefixBox;
         private System.Windows.Forms.FlowLayoutPanel FlowImagePanel;
-        private System.ComponentModel.BackgroundWorker BackgroundImageLoader;
     }
 }
 

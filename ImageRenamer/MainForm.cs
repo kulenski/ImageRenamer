@@ -20,40 +20,18 @@ namespace ImageRenamer
         ImageHolder.OnViewButtonListener
     {
         private String SelectedFolder = "";
-        private List<ImageItem> mItemsList;
-        private ImageList mImageList;
+        private List<ImageItem> mInitialFileList, mRenameFileList;
         private int ViewCount = 1;
         private int RackCount = 1;
         private int RackSubCount = 1;
-
-        // Properties
-        public  int ViewCounter
-        {
-            get { return this.ViewCount; }
-            
-        }
-
-        public int RackCounter
-        {
-            get { return this.RackCount; }
-            
-        }
-
-        public int RackSubCounter
-        {
-            get { return this.RackSubCount; }
-           
-        }
+        private const Boolean IsView = true;
 
         public MainForm()
         {
             InitializeComponent();
             //updateWindowTitle("няма избрана папка!");
-            mItemsList = new List<ImageItem>();
-            mImageList = new ImageList();
-            mImageList.ImageSize = new Size(256, 256);
-            mImageList.ColorDepth = ColorDepth.Depth32Bit;
-
+            mInitialFileList = new List<ImageItem>();
+            mRenameFileList = new List<ImageItem>();
 
             //MouseWheel
             Application.AddMessageFilter(this);
@@ -152,24 +130,25 @@ namespace ImageRenamer
          * 
          */ 
 
-        public void onRackButtonClick(ImageItem tItem) 
+        public void onRackButtonClick(ImageItem tItem, ImageHolder mReference) 
         {
-            updateItem(tItem, false);
+            
+            updateItem(tItem, mReference ,!IsView);
             this.RackCount++;
             this.RackSubCount = 1;
             //MessageBox.Show(RackCount.ToString() + " " + RackSubCount.ToString() + " " + ViewCount.ToString());
         }
 
-        public void onRackSubButtonClick(ImageItem tItem)
+        public void onRackSubButtonClick(ImageItem tItem, ImageHolder mReference)
         {
-            updateItem(tItem, false);
+            updateItem(tItem,mReference , !IsView);
             this.RackSubCount++;
             //MessageBox.Show(RackCount.ToString() + " " + RackSubCount.ToString() + " " + ViewCount.ToString());
         }
 
-        public void onViewButtonClick(ImageItem tItem)
+        public void onViewButtonClick(ImageItem tItem, ImageHolder mReference)
         {
-            updateItem(tItem, true);
+            updateItem(tItem,mReference, IsView);
             this.ViewCount++;
             //MessageBox.Show(RackCount.ToString() + " " + RackSubCount.ToString() + " " + ViewCount.ToString());
         }
@@ -181,32 +160,27 @@ namespace ImageRenamer
          * Functions
          */
 
-        private void updateItem(ImageItem mItem, Boolean isView) {
-            int index;
-            for (index = 0; index < mItemsList.Count; index++)
-            {
-                if (mItemsList.ElementAt(index).getOriginalName().Equals(mItem.getOriginalName())) break;
-            }
-            mItemsList.RemoveAt(index);
+        private void updateItem(ImageItem mItem, ImageHolder holder, Boolean isView) {
 
-            if (isView) mItem.setNewName("TEST", "View" + ViewCount + ".JPG");
-            else mItem.setNewName("TEST", RackCount + "." + RackSubCount + ".JPG");
+            if (isView) mItem.setNewName("TEST", "View" + ViewCount + ".jpg");
+            else mItem.setNewName("TEST", RackCount + "." + RackSubCount + ".jpg");
 
-            mItemsList.Add(mItem);
+            holder.RenameLabel(mItem.getNewName());
+            mRenameFileList.Add(mItem);
         }
 
         private void PopulateControls(string FolderPath)
         {
             int i = 0;
             // Clear previously saved list
-            mItemsList.Clear();
+            mInitialFileList.Clear();
             foreach (String filePath in Directory.GetFiles(FolderPath, "*.jpg"))
             {
 
                 try {
-                    mItemsList.Add(new ImageItem(filePath));
-                    mImageList.Images.Add(Image.FromFile(filePath));
-                    FlowImagePanel.Controls.Add(new ImageHolder(mImageList.Images[i], mItemsList[i]));
+                    mInitialFileList.Add(new ImageItem(filePath));
+                    Image mThumbImage = Image.FromFile(filePath).GetThumbnailImage(256,256,()=>false,IntPtr.Zero);
+                    FlowImagePanel.Controls.Add(new ImageHolder(mThumbImage, mInitialFileList[i]));
                     i++;
                 }
                 catch (OutOfMemoryException e) { 
@@ -219,33 +193,23 @@ namespace ImageRenamer
 
         public int PerformRename()
         {
-            int counter = 0;
-            String OriginalPath, NewPath;
-            ImageItem mItem;
-            for (int index = 0; index < mItemsList.Count; index++)
+           int counter = 0;
+           foreach (ImageItem mItem in mRenameFileList)
             {
-                mItem = mItemsList.ElementAt(index);
-
-                OriginalPath = mItem.getOriginalPath();
-                NewPath = mItem.getNewPath();
-                // skip identical items
-                if (NewPath == null || OriginalPath.Equals(NewPath)) continue;
-                // rename others
+        
                 try
                 {
-                    File.Move(OriginalPath, NewPath);
-                    // delete element from list, so user cannot rename it again.
-                    mItemsList.RemoveAt(index);
+                    File.Move(mItem.getOriginalPath(), mItem.getNewPath());
                     counter++;
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show("Съществува файл с такова име: " + NewPath);
+                    MessageBox.Show("Съществува файл с такова име: " + mItem.getNewPath());
                     counter--;
                 }
-
             }
-            return counter;
+           mRenameFileList.Clear();
+           return counter;
         }
 
         private void updateWindowTitle(string title)

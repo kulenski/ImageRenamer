@@ -33,6 +33,7 @@
             this.ViewButton = new System.Windows.Forms.Button();
             this.RackButton = new System.Windows.Forms.Button();
             this.PictureBox = new System.Windows.Forms.PictureBox();
+            this.ShadeLayer = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -84,15 +85,26 @@
             this.PictureBox.TabIndex = 1;
             this.PictureBox.TabStop = false;
             // 
+            // ShadeLayer
+            // 
+            this.ShadeLayer.AutoSize = true;
+            this.ShadeLayer.Location = new System.Drawing.Point(3, 3);
+            this.ShadeLayer.Name = "ShadeLayer";
+            this.ShadeLayer.Size = new System.Drawing.Size(256, 256);
+            this.ShadeLayer.TabIndex = 3;
+            this.ShadeLayer.Text = "ShadeLayer";
+            this.ShadeLayer.BackColor = System.Drawing.Color.Black;
+            // 
             // ImageHolder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
+            this.Controls.Add(this.RackButton);
             this.Controls.Add(this.RackSubButton);
             this.Controls.Add(this.ViewButton);
-            this.Controls.Add(this.RackButton);
             this.Controls.Add(this.PictureBox);
+            this.Controls.Add(this.ShadeLayer);
             this.Controls.Add(this.OriginalName);
             this.Name = "ImageHolder";
             this.Size = new System.Drawing.Size(262, 282);
@@ -109,5 +121,6 @@
         private System.Windows.Forms.Button RackButton;
         private System.Windows.Forms.Button ViewButton;
         private System.Windows.Forms.Button RackSubButton;
+        private System.Windows.Forms.Label ShadeLayer;
     }
 }
