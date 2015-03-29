@@ -28,81 +28,112 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.FlowImagePanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.FlowButtonsPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.RenameButton = new System.Windows.Forms.Button();
             this.OpenFolderButton = new System.Windows.Forms.Button();
             this.PrefixBox = new System.Windows.Forms.TextBox();
-            this.FlowImagePanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.FlowButtonsPanel.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // FlowImagePanel
+            // 
+            this.FlowImagePanel.AutoScroll = true;
+            this.FlowImagePanel.BackColor = System.Drawing.Color.Transparent;
+            this.FlowImagePanel.Location = new System.Drawing.Point(0, 60);
+            this.FlowImagePanel.Name = "FlowImagePanel";
+            this.FlowImagePanel.Size = new System.Drawing.Size(13, 10);
+            this.FlowImagePanel.TabIndex = 4;
+            // 
+            // FlowButtonsPanel
+            // 
+            this.FlowButtonsPanel.BackColor = System.Drawing.Color.Gainsboro;
+            this.FlowButtonsPanel.BackgroundImage = global::ImageRenamer.Properties.Resources.nav_panel_background1;
+            this.FlowButtonsPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.FlowButtonsPanel.Controls.Add(this.RenameButton);
+            this.FlowButtonsPanel.Controls.Add(this.OpenFolderButton);
+            this.FlowButtonsPanel.Controls.Add(this.PrefixBox);
+            this.FlowButtonsPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.FlowButtonsPanel.Location = new System.Drawing.Point(0, 0);
+            this.FlowButtonsPanel.Margin = new System.Windows.Forms.Padding(2);
+            this.FlowButtonsPanel.Name = "FlowButtonsPanel";
+            this.FlowButtonsPanel.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.FlowButtonsPanel.Size = new System.Drawing.Size(814, 55);
+            this.FlowButtonsPanel.TabIndex = 7;
             // 
             // RenameButton
             // 
-            this.RenameButton.BackColor = System.Drawing.Color.SkyBlue;
-            this.RenameButton.Location = new System.Drawing.Point(427, 12);
+            this.RenameButton.Image = global::ImageRenamer.Properties.Resources.save_icon;
+            this.RenameButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.RenameButton.Location = new System.Drawing.Point(669, 3);
             this.RenameButton.Name = "RenameButton";
-            this.RenameButton.Size = new System.Drawing.Size(182, 37);
-            this.RenameButton.TabIndex = 3;
-            this.RenameButton.Text = "Rename";
-            this.RenameButton.UseVisualStyleBackColor = false;
+            this.RenameButton.Size = new System.Drawing.Size(140, 50);
+            this.RenameButton.TabIndex = 6;
+            this.RenameButton.Text = "Преименувай";
+            this.RenameButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.RenameButton.UseVisualStyleBackColor = true;
             this.RenameButton.Click += new System.EventHandler(this.RenameButton_Click);
             // 
             // OpenFolderButton
             // 
-            this.OpenFolderButton.BackColor = System.Drawing.Color.LightSteelBlue;
-            this.OpenFolderButton.Location = new System.Drawing.Point(276, 12);
+            this.OpenFolderButton.Image = global::ImageRenamer.Properties.Resources.open_icon;
+            this.OpenFolderButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.OpenFolderButton.Location = new System.Drawing.Point(523, 3);
             this.OpenFolderButton.Name = "OpenFolderButton";
-            this.OpenFolderButton.Size = new System.Drawing.Size(145, 37);
-            this.OpenFolderButton.TabIndex = 0;
-            this.OpenFolderButton.Text = "Open Folder";
-            this.OpenFolderButton.UseVisualStyleBackColor = false;
+            this.OpenFolderButton.Size = new System.Drawing.Size(140, 50);
+            this.OpenFolderButton.TabIndex = 7;
+            this.OpenFolderButton.Text = "Отвори папка";
+            this.OpenFolderButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.OpenFolderButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.OpenFolderButton.UseVisualStyleBackColor = true;
             this.OpenFolderButton.Click += new System.EventHandler(this.OpenFolderButton_Click);
             // 
             // PrefixBox
             // 
             this.PrefixBox.BackColor = System.Drawing.Color.WhiteSmoke;
             this.PrefixBox.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.PrefixBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.PrefixBox.Location = new System.Drawing.Point(13, 17);
+            this.PrefixBox.Font = new System.Drawing.Font("Calibri Light", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.PrefixBox.ForeColor = System.Drawing.Color.LightSlateGray;
+            this.PrefixBox.Location = new System.Drawing.Point(305, 15);
+            this.PrefixBox.Margin = new System.Windows.Forms.Padding(15, 15, 20, 15);
+            this.PrefixBox.MaxLength = 30;
             this.PrefixBox.Name = "PrefixBox";
-            this.PrefixBox.Size = new System.Drawing.Size(257, 24);
+            this.PrefixBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.PrefixBox.Size = new System.Drawing.Size(200, 27);
             this.PrefixBox.TabIndex = 1;
-            // 
-            // FlowImagePanel
-            // 
-            this.FlowImagePanel.AutoScroll = true;
-            this.FlowImagePanel.BackColor = System.Drawing.Color.DimGray;
-            this.FlowImagePanel.Location = new System.Drawing.Point(3, 55);
-            this.FlowImagePanel.Name = "FlowImagePanel";
-            this.FlowImagePanel.Size = new System.Drawing.Size(13, 10);
-            this.FlowImagePanel.TabIndex = 4;
+            this.PrefixBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.PrefixBox.Leave += new System.EventHandler(this.PrefixBox_Leave);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.BackColor = System.Drawing.Color.Gray;
+            this.BackColor = System.Drawing.Color.DimGray;
+            this.BackgroundImage = global::ImageRenamer.Properties.Resources.image_panel_background_rotated;
             this.ClientSize = new System.Drawing.Size(814, 598);
+            this.Controls.Add(this.FlowButtonsPanel);
             this.Controls.Add(this.FlowImagePanel);
-            this.Controls.Add(this.PrefixBox);
-            this.Controls.Add(this.OpenFolderButton);
-            this.Controls.Add(this.RenameButton);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Vivacom.RDNS ImageRenamer";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.Resize += new System.EventHandler(this.MainForm_Resize);
+            this.FlowButtonsPanel.ResumeLayout(false);
+            this.FlowButtonsPanel.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Button RenameButton;
-        private System.Windows.Forms.Button OpenFolderButton;
         private System.Windows.Forms.TextBox PrefixBox;
         private System.Windows.Forms.FlowLayoutPanel FlowImagePanel;
+        private System.Windows.Forms.Button RenameButton;
+        private System.Windows.Forms.FlowLayoutPanel FlowButtonsPanel;
+        private System.Windows.Forms.Button OpenFolderButton;
+
     }
 }
 

@@ -106,6 +106,24 @@
   <ItemGroup>
     <None Include="Resources\AddViewButtonIcon.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\open-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\save-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\nav-panel-background.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\image-panel-background.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\image-panel-background-rotated.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\nav-panel-background1.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
+using System.Text.RegularExpressions;
 
 namespace ImageRenamer
 {
@@ -25,50 +26,14 @@ namespace ImageRenamer
         private int RackCount = 1;
         private int RackSubCount = 1;
         private const Boolean IsView = true;
+        private BackgroundWorker ImageLoader;
+        private WaitForm mWaitForm;
+        private String FilePrefix = "";
 
         public MainForm()
         {
             InitializeComponent();
-            //updateWindowTitle("няма избрана папка!");
-            mInitialFileList = new List<ImageItem>();
-            mRenameFileList = new List<ImageItem>();
-
-            //MouseWheel
-            Application.AddMessageFilter(this);
         }
-
-       #region MainForm UI interactions
-
-        /*
-         *  UI events
-         */
-        private void OpenFolderButton_Click(object sender, EventArgs e)
-        {
-            FolderBrowserDialog mDialog = new FolderBrowserDialog();
-            mDialog.RootFolder = Environment.SpecialFolder.Desktop;
-            mDialog.Description = "Избери папка със снимки";
-            mDialog.ShowDialog();
-
-            // No directory is selected
-            if (mDialog.SelectedPath.Equals("")) {
-                MessageBox.Show("Не сте избрали папка!");
-            // Directory contains no files
-            } else if (Directory.GetFiles(mDialog.SelectedPath).Length == 0) {
-                MessageBox.Show("Избраната папка не съдържа файлове!");
-            // Oh yes, everything is fine!
-            } else { 
-                SelectedFolder = mDialog.SelectedPath;
-                updateWindowTitle(SelectedFolder);
-                PopulateControls(SelectedFolder);
-            }
-        }
-
-        private void RenameButton_Click(object sender, EventArgs e)
-        {
-            int i = PerformRename();
-            if (i > 0) MessageBox.Show(i + " файлове бяха преименувани!");
-        }
-
 
         private void MainForm_Load(object sender, EventArgs e)
         {
@@ -76,6 +41,17 @@ namespace ImageRenamer
             // resize event is not fired for some reason, so we need
             // to do this manually here to ensure proper layout arrangement.
             MainForm_Resize(sender, e);
+
+            mInitialFileList = new List<ImageItem>();
+            mRenameFileList = new List<ImageItem>();
+
+            //MouseWheel
+            Application.AddMessageFilter(this);
+
+            ImageLoader = new BackgroundWorker();
+            ImageLoader.DoWork += new DoWorkEventHandler(this.ImageLoader_DoWork);
+
+            mWaitForm = new WaitForm();
         }
 
 
@@ -84,9 +60,9 @@ namespace ImageRenamer
         {
             FlowImagePanel.Height = MainForm.ActiveForm.Height - FlowImagePanel.Top - 40;
             FlowImagePanel.Width = MainForm.ActiveForm.Width - FlowImagePanel.Left - 20;
+            FlowButtonsPanel.Width = MainForm.ActiveForm.Width;
         }
-        #endregion
-
+        
        #region MouseWheel hack
         /*
          * [MouseWheel]
@@ -122,7 +98,63 @@ namespace ImageRenamer
                 private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wp, IntPtr lp);
         #endregion
 
-       #region ImageHolder callbacks
+
+       #region MainForm UI interactions
+
+        /*
+         *  UI events
+         */
+        private void OpenFolderButton_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog mDialog = new FolderBrowserDialog();
+            mDialog.RootFolder = Environment.SpecialFolder.Desktop;
+            mDialog.Description = "Избери папка със снимки";
+            mDialog.ShowDialog();
+
+            // No directory is selected
+            if (mDialog.SelectedPath.Equals("")) {
+                MessageBox.Show("Не сте избрали папка!");
+            // Directory contains no files
+            } else if (Directory.GetFiles(mDialog.SelectedPath).Length == 0) {
+                MessageBox.Show("Избраната папка не съдържа файлове!");
+            // Oh yes, everything is fine!
+            } else { 
+                SelectedFolder = mDialog.SelectedPath;
+                updateWindowTitle(SelectedFolder);
+                PopulateControls(SelectedFolder);
+                //ImageLoader.RunWorkerAsync();
+            }
+        }
+
+        private void RenameButton_Click(object sender, EventArgs e)
+        {
+
+            int i = PerformRename();
+            if (i > 0) MessageBox.Show(i + " файлове бяха преименувани!");
+        }
+
+        // Logic here is simple, if you change prefix, then the counters are reset.
+        // This is useful when we have images for more than one room for example
+        // and each room has different prefix!
+
+        private void PrefixBox_Leave(object sender, EventArgs e)
+        {
+            if (!PrefixBox.Text.Equals(FilePrefix))
+            {
+                RackCount = 1; RackSubCount = 1; ViewCount = 1;
+                PrefixBox.Text = Regex.Replace(PrefixBox.Text, @"\s+", "_");
+                
+                if (PrefixBox.Text.Count() > 0) FilePrefix = PrefixBox.Text + "_";
+                else FilePrefix = "";
+            }
+            
+        }
+
+       #endregion
+
+
+
+        #region ImageHolder callbacks
 
         /*
          * 
@@ -155,15 +187,31 @@ namespace ImageRenamer
 
         #endregion
 
+
        #region HelperFunctions
         /*
          * Functions
          */
 
+
+        private void ImageLoader_DoWork(object sender, DoWorkEventArgs e)
+        {
+            BackgroundWorker worker = sender as BackgroundWorker;
+            mWaitForm.Show();
+
+            PopulateControls(SelectedFolder);
+        }
+
+        private void ImageLoader_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            mWaitForm.HideWaitForm();
+        }
+
+
         private void updateItem(ImageItem mItem, ImageHolder holder, Boolean isView) {
 
-            if (isView) mItem.setNewName("TEST", "View" + ViewCount + ".jpg");
-            else mItem.setNewName("TEST", RackCount + "." + RackSubCount + ".jpg");
+            if (isView) mItem.setNewName(FilePrefix, "View" + ViewCount + ".jpg");
+            else mItem.setNewName(FilePrefix, RackCount + "." + RackSubCount + ".jpg");
 
             holder.RenameLabel(mItem.getNewName());
             mRenameFileList.Add(mItem);
@@ -218,5 +266,10 @@ namespace ImageRenamer
         }
 
         #endregion
+
+      
+
+       
+
     }
 }

@@ -42,10 +42,12 @@
             this.OriginalName.AutoSize = true;
             this.OriginalName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.OriginalName.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.OriginalName.Location = new System.Drawing.Point(106, 260);
+            this.OriginalName.Location = new System.Drawing.Point(3, 262);
             this.OriginalName.Name = "OriginalName";
             this.OriginalName.Size = new System.Drawing.Size(0, 18);
             this.OriginalName.TabIndex = 0;
+            this.OriginalName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.OriginalName.TextChanged += new System.EventHandler(this.OriginalName_TextChanged);
             // 
             // RackSubButton
             // 
@@ -88,12 +90,12 @@
             // ShadeLayer
             // 
             this.ShadeLayer.AutoSize = true;
+            this.ShadeLayer.BackColor = System.Drawing.Color.Black;
             this.ShadeLayer.Location = new System.Drawing.Point(3, 3);
             this.ShadeLayer.Name = "ShadeLayer";
-            this.ShadeLayer.Size = new System.Drawing.Size(256, 256);
+            this.ShadeLayer.Size = new System.Drawing.Size(64, 13);
             this.ShadeLayer.TabIndex = 3;
             this.ShadeLayer.Text = "ShadeLayer";
-            this.ShadeLayer.BackColor = System.Drawing.Color.Black;
             // 
             // ImageHolder
             // 

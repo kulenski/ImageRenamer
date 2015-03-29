@@ -12,41 +12,19 @@ namespace ImageRenamer
 {
     public partial class WaitForm : Form
     {
-        static Thread mThread = null;
-        static WaitForm mWaitForm = null;
+        static WaitForm mInstance = null;
 
         public WaitForm()
         {
             InitializeComponent();
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.StartPosition = FormStartPosition.CenterScreen;
+            mInstance = this;
         }
 
-        static private void ShowWaitForm() {
-            mWaitForm = new WaitForm();
-            Application.Run(mWaitForm);
-        }
+        public void ShowWaitForm() {  mInstance.Show(); }
 
-        static public void StartWaitForm()
-        {
-            if (mWaitForm != null) return;
-            mThread = new Thread(new ThreadStart(WaitForm.ShowWaitForm));
-            mThread.IsBackground = true;
-            mThread.SetApartmentState(ApartmentState.STA);
-            mThread.Start();
-
-            while (mWaitForm == null || mWaitForm.IsHandleCreated == false)
-            {
-                System.Threading.Thread.Sleep(50);
-            }
-        }
-
-        static public void HideWaitForm()
-        {
-            mWaitForm.Close();
-            mThread = null;
-            mWaitForm = null;
-        }
+        public void HideWaitForm() {  mInstance.Close(); }
 
     }
 }

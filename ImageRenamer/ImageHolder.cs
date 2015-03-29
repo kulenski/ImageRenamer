@@ -96,6 +96,15 @@ namespace ImageRenamer
         public interface OnRackButtonListener { void onRackButtonClick(ImageItem mItem, ImageHolder reference); }
         public interface OnRackSubButtonListener { void onRackSubButtonClick(ImageItem mItem, ImageHolder reference); }
         public interface OnViewButtonListener { void onViewButtonClick(ImageItem mItem, ImageHolder reference); }
+
+        // MUST fix not placing in center behavior and add dynamic resize of the ImageHolder,
+        // because prefix names can be broader than the width of the ImageHolder
+        // and in this case the label should expand the text and resize the Holder.
+        private void OriginalName_TextChanged(object sender, EventArgs e)
+        {
+            
+            OriginalName.Left = ((200 - OriginalName.Width) / 2);
+        }
        
     }
 }
