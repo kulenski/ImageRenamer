@@ -11,6 +11,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Text.RegularExpressions;
+using System.Drawing.Drawing2D;
 
 namespace ImageRenamer
 {
@@ -22,17 +23,19 @@ namespace ImageRenamer
     {
         private String SelectedFolder = "";
         private List<ImageItem> mInitialFileList, mRenameFileList;
-        private int ViewCount = 1;
-        private int RackCount = 1;
-        private int RackSubCount = 1;
+        private int ViewCount = 0;
+        private int RackCount = 0;
+        private int RackSubCount = 0;
         private const Boolean IsView = true;
-        private BackgroundWorker ImageLoader;
+        //private BackgroundWorker ImageLoader;
         private WaitForm mWaitForm;
         private String FilePrefix = "";
 
         public MainForm()
         {
             InitializeComponent();
+            // reduce flickering!
+            DoubleBuffered = true;
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -48,19 +51,33 @@ namespace ImageRenamer
             //MouseWheel
             Application.AddMessageFilter(this);
 
-            ImageLoader = new BackgroundWorker();
-            ImageLoader.DoWork += new DoWorkEventHandler(this.ImageLoader_DoWork);
+            //ImageLoader = new BackgroundWorker();
+            //ImageLoader.DoWork += new DoWorkEventHandler(this.ImageLoader_DoWork);
 
-            mWaitForm = new WaitForm();
+            //mWaitForm = new WaitForm();
         }
 
+        private void MainForm_Paint(object sender, PaintEventArgs e)
+        {
+            // These lines draw Gradient
+            //LinearGradientBrush mBrush = new LinearGradientBrush(this.ClientRectangle, Color.WhiteSmoke, Color.SteelBlue, 90F);
+            //e.Graphics.FillRectangle(mBrush, this.ClientRectangle);
+        }
 
         // Performs dynamic arrangement of the UI controls
         private void MainForm_Resize(object sender, EventArgs e)
         {
+            this.Invalidate();
             FlowImagePanel.Height = MainForm.ActiveForm.Height - FlowImagePanel.Top - 40;
             FlowImagePanel.Width = MainForm.ActiveForm.Width - FlowImagePanel.Left - 20;
             FlowButtonsPanel.Width = MainForm.ActiveForm.Width;
+
+            //int HolderDifferential = MainForm.ActiveForm.Width % 262;
+            //int HolderMultiplier = 0;
+            //while (HolderMultiplier * 262 < MainForm.ActiveForm.Width) HolderMultiplier++;
+
+            //FlowImagePanel.Margin = new Padding((HolderDifferential / HolderMultiplier));
+            //MessageBox.Show(FlowImagePanel.Margin.ToString());
         }
         
        #region MouseWheel hack
@@ -122,15 +139,30 @@ namespace ImageRenamer
                 SelectedFolder = mDialog.SelectedPath;
                 updateWindowTitle(SelectedFolder);
                 PopulateControls(SelectedFolder);
+                //mWaitForm.Show();
                 //ImageLoader.RunWorkerAsync();
             }
         }
 
         private void RenameButton_Click(object sender, EventArgs e)
         {
-
+            // Disable clear button, because there's no turning back after rename.
+            ClearSelectionButton.Enabled = false;
             int i = PerformRename();
             if (i > 0) MessageBox.Show(i + " файлове бяха преименувани!");
+
+        }
+
+        private void ClearSelection_Click(object sender, EventArgs e)
+        {
+            mRenameFileList.Clear();
+            foreach (ImageHolder mImageHolder in FlowImagePanel.Controls)
+            {
+                mImageHolder.RestoreOriginalState();
+            }
+            
+            // reset counters
+            RackCount = 0; RackSubCount = 0; ViewCount = 0;
         }
 
         // Logic here is simple, if you change prefix, then the counters are reset.
@@ -138,13 +170,16 @@ namespace ImageRenamer
         // and each room has different prefix!
 
         private void PrefixBox_Leave(object sender, EventArgs e)
-        {
+        {   
             if (!PrefixBox.Text.Equals(FilePrefix))
             {
-                RackCount = 1; RackSubCount = 1; ViewCount = 1;
-                PrefixBox.Text = Regex.Replace(PrefixBox.Text, @"\s+", "_");
-                
-                if (PrefixBox.Text.Count() > 0) FilePrefix = PrefixBox.Text + "_";
+                RackCount = 0; RackSubCount = 0; ViewCount = 0;
+
+                if (PrefixBox.Text.Count() > 0)
+                {
+                    PrefixBox.Text = Regex.Replace(PrefixBox.Text, @"\s+", "_");
+                    FilePrefix = PrefixBox.Text + "_";
+                }
                 else FilePrefix = "";
             }
             
@@ -164,25 +199,24 @@ namespace ImageRenamer
 
         public void onRackButtonClick(ImageItem tItem, ImageHolder mReference) 
         {
-            
-            updateItem(tItem, mReference ,!IsView);
             this.RackCount++;
             this.RackSubCount = 1;
-            //MessageBox.Show(RackCount.ToString() + " " + RackSubCount.ToString() + " " + ViewCount.ToString());
+            updateItem(tItem, mReference ,!IsView);
+            
         }
 
         public void onRackSubButtonClick(ImageItem tItem, ImageHolder mReference)
         {
-            updateItem(tItem,mReference , !IsView);
+            if (RackCount == 0) RackCount++;
             this.RackSubCount++;
-            //MessageBox.Show(RackCount.ToString() + " " + RackSubCount.ToString() + " " + ViewCount.ToString());
+            updateItem(tItem, mReference, !IsView);
+            
         }
 
         public void onViewButtonClick(ImageItem tItem, ImageHolder mReference)
         {
-            updateItem(tItem,mReference, IsView);
             this.ViewCount++;
-            //MessageBox.Show(RackCount.ToString() + " " + RackSubCount.ToString() + " " + ViewCount.ToString());
+            updateItem(tItem,mReference, IsView);
         }
 
         #endregion
@@ -194,18 +228,16 @@ namespace ImageRenamer
          */
 
 
-        private void ImageLoader_DoWork(object sender, DoWorkEventArgs e)
-        {
-            BackgroundWorker worker = sender as BackgroundWorker;
-            mWaitForm.Show();
+        //private void ImageLoader_DoWork(object sender, DoWorkEventArgs e)
+        //{
+        //    BackgroundWorker worker = sender as BackgroundWorker;
+        //    PopulateControls(SelectedFolder);
+        //}
 
-            PopulateControls(SelectedFolder);
-        }
-
-        private void ImageLoader_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            mWaitForm.HideWaitForm();
-        }
+        //private void ImageLoader_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        //{
+        //    mWaitForm.HideWaitForm();
+        //}
 
 
         private void updateItem(ImageItem mItem, ImageHolder holder, Boolean isView) {
@@ -222,13 +254,28 @@ namespace ImageRenamer
             int i = 0;
             // Clear previously saved list
             mInitialFileList.Clear();
+
+            // reset counters
+            RackCount = 0; RackSubCount = 0; ViewCount = 0;
+
+            // Remove previously loaded controls in the flow menu
+            // in case someome clicks Open button consecutive times
+            // and load images twice
+            if (FlowImagePanel.Controls.Count > 0)
+            {
+                foreach (ImageHolder mHolder in FlowImagePanel.Controls)
+                {
+                    mHolder.Dispose();
+                }
+                FlowImagePanel.Controls.Clear();
+            }
+
+            // Load new stuff here!
             foreach (String filePath in Directory.GetFiles(FolderPath, "*.jpg"))
             {
-
                 try {
                     mInitialFileList.Add(new ImageItem(filePath));
-                    FlowImagePanel.Controls.Add(new ImageHolder(mInitialFileList[i]));
-                    
+                    FlowImagePanel.Controls.Add(new ImageHolder(mInitialFileList[i],this));
                     i++;
                 }
                 catch (OutOfMemoryException e) { 
@@ -237,6 +284,9 @@ namespace ImageRenamer
                 }
                 
             }
+
+            // Enable clear button
+            ClearSelectionButton.Enabled = true;
         }
 
         public int PerformRename()
@@ -267,9 +317,6 @@ namespace ImageRenamer
 
         #endregion
 
-      
-
-       
-
+        
     }
 }

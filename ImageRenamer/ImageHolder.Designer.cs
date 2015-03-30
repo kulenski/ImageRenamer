@@ -28,33 +28,30 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.OriginalName = new System.Windows.Forms.Label();
+            this.HolderLabel = new System.Windows.Forms.Label();
             this.RackSubButton = new System.Windows.Forms.Button();
             this.ViewButton = new System.Windows.Forms.Button();
             this.RackButton = new System.Windows.Forms.Button();
             this.PictureBox = new System.Windows.Forms.PictureBox();
-            this.ShadeLayer = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox)).BeginInit();
             this.SuspendLayout();
             // 
-            // OriginalName
+            // HolderLabel
             // 
-            this.OriginalName.AutoSize = true;
-            this.OriginalName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.OriginalName.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.OriginalName.Location = new System.Drawing.Point(3, 262);
-            this.OriginalName.Name = "OriginalName";
-            this.OriginalName.Size = new System.Drawing.Size(0, 18);
-            this.OriginalName.TabIndex = 0;
-            this.OriginalName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.OriginalName.TextChanged += new System.EventHandler(this.OriginalName_TextChanged);
+            this.HolderLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.HolderLabel.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.HolderLabel.Location = new System.Drawing.Point(3, 264);
+            this.HolderLabel.Name = "HolderLabel";
+            this.HolderLabel.Size = new System.Drawing.Size(256, 24);
+            this.HolderLabel.TabIndex = 0;
+            this.HolderLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // RackSubButton
             // 
             this.RackSubButton.Image = global::ImageRenamer.Properties.Resources.AddRackSubButtonIcon;
             this.RackSubButton.Location = new System.Drawing.Point(109, 88);
             this.RackSubButton.Name = "RackSubButton";
-            this.RackSubButton.Size = new System.Drawing.Size(50, 50);
+            this.RackSubButton.Size = new System.Drawing.Size(48, 48);
             this.RackSubButton.TabIndex = 2;
             this.RackSubButton.UseVisualStyleBackColor = true;
             this.RackSubButton.Click += new System.EventHandler(this.RackSubButton_Click);
@@ -64,17 +61,18 @@
             this.ViewButton.Image = global::ImageRenamer.Properties.Resources.AddViewButtonIcon;
             this.ViewButton.Location = new System.Drawing.Point(165, 88);
             this.ViewButton.Name = "ViewButton";
-            this.ViewButton.Size = new System.Drawing.Size(50, 50);
+            this.ViewButton.Size = new System.Drawing.Size(48, 48);
             this.ViewButton.TabIndex = 2;
             this.ViewButton.UseVisualStyleBackColor = true;
             this.ViewButton.Click += new System.EventHandler(this.ViewButton_Click);
             // 
             // RackButton
             // 
+            this.RackButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.RackButton.Image = global::ImageRenamer.Properties.Resources.AddRackButtonIcon;
             this.RackButton.Location = new System.Drawing.Point(53, 88);
             this.RackButton.Name = "RackButton";
-            this.RackButton.Size = new System.Drawing.Size(50, 50);
+            this.RackButton.Size = new System.Drawing.Size(48, 48);
             this.RackButton.TabIndex = 2;
             this.RackButton.UseVisualStyleBackColor = true;
             this.RackButton.Click += new System.EventHandler(this.RackButton_Click);
@@ -87,42 +85,29 @@
             this.PictureBox.TabIndex = 1;
             this.PictureBox.TabStop = false;
             // 
-            // ShadeLayer
-            // 
-            this.ShadeLayer.AutoSize = true;
-            this.ShadeLayer.BackColor = System.Drawing.Color.Black;
-            this.ShadeLayer.Location = new System.Drawing.Point(3, 3);
-            this.ShadeLayer.Name = "ShadeLayer";
-            this.ShadeLayer.Size = new System.Drawing.Size(64, 13);
-            this.ShadeLayer.TabIndex = 3;
-            this.ShadeLayer.Text = "ShadeLayer";
-            // 
             // ImageHolder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Black;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.Controls.Add(this.RackButton);
             this.Controls.Add(this.RackSubButton);
             this.Controls.Add(this.ViewButton);
             this.Controls.Add(this.PictureBox);
-            this.Controls.Add(this.ShadeLayer);
-            this.Controls.Add(this.OriginalName);
+            this.Controls.Add(this.HolderLabel);
             this.Name = "ImageHolder";
-            this.Size = new System.Drawing.Size(262, 282);
+            this.Size = new System.Drawing.Size(262, 290);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Label OriginalName;
+        private System.Windows.Forms.Label HolderLabel;
         private System.Windows.Forms.PictureBox PictureBox;
         private System.Windows.Forms.Button RackButton;
         private System.Windows.Forms.Button ViewButton;
         private System.Windows.Forms.Button RackSubButton;
-        private System.Windows.Forms.Label ShadeLayer;
     }
 }

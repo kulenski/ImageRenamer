@@ -16,87 +16,106 @@ namespace ImageRenamer
         private OnRackButtonListener mRackButtonListener;
         private OnRackSubButtonListener mRackSubButtonListener;
         private OnViewButtonListener mViewButtonListener;
-
-        public ImageHolder(ImageItem mItem)
+        private MainForm mParentForm;
+        
+        public ImageHolder(ImageItem mItem, MainForm mInstance)
         {
             InitializeComponent();
 
-            // Make shade transparent
-            this.ShadeLayer.BackColor = Color.FromArgb(0, Color.Black);
-
-            
+            mParentForm = mInstance;
+                   
             if (mItem != null)
             {
-                OriginalName.Text = mItem.getOriginalName();
+                HolderLabel.Text = mItem.getOriginalName();
                 this.currentItem = mItem;
                 LoadImage();
             }
 
-            this.mRackButtonListener = (OnRackButtonListener)MainForm.ActiveForm;
-            this.mRackSubButtonListener = (OnRackSubButtonListener)MainForm.ActiveForm;
-            this.mViewButtonListener = (OnViewButtonListener)MainForm.ActiveForm;
-            
+            // Assign listeners
+            this.mRackButtonListener = (OnRackButtonListener)mParentForm;
+            this.mRackSubButtonListener = (OnRackSubButtonListener)mParentForm;
+            this.mViewButtonListener = (OnViewButtonListener)mParentForm; 
         }
 
 
         private void LoadImage()
         {
-
             Bitmap mBitmap = new Bitmap(currentItem.getOriginalPath());
             Bitmap resizedBitmap = new Bitmap(mBitmap, new Size(256, 256));
             PictureBox.Image = resizedBitmap;
             mBitmap.Dispose();
         }
 
-        //dummy
+      
         private void RackButton_Click(object sender, EventArgs e)
         {
-            updateItem();
             mRackButtonListener.onRackButtonClick(currentItem, this);
+            setButtonsEnabled(false);
+
             // MainForm handles the MouseWheel event properly,
             // but when we click on some of the buttons the
             // focus is being moved to ImageHolder and
             // MouseWheel stop working. So we focus back to MainForm
             // so we can have consistent MouseWheel event behavior.
-            MainForm.ActiveForm.Focus();
-            
-        }
-        
-        //dummy
-        private void ViewButton_Click(object sender, EventArgs e)
-        {
-            updateItem();
-            mViewButtonListener.onViewButtonClick(currentItem, this);
-            // We need this for MouseWheel event handling. See above remark.
-            MainForm.ActiveForm.Focus();
-            
+            mParentForm.Focus();            
         }
 
-        //dummy
         private void RackSubButton_Click(object sender, EventArgs e)
         {
-            updateItem();
             mRackSubButtonListener.onRackSubButtonClick(currentItem, this);
-            // We need this for MouseWheel event handling. See above remark.
-            MainForm.ActiveForm.Focus();
-        }
-
-        private void updateItem()
-        {
+            setButtonsEnabled(false);
             
-            RackButton.Enabled = false;
-            RackSubButton.Enabled = false;
-            ViewButton.Enabled = false;
-
-            RackButton.Visible = false;
-            RackSubButton.Visible = false;
-            ViewButton.Visible = false;
+            // We need this for MouseWheel event handling. See above remark.
+            mParentForm.Focus();
         }
-
-        public void RenameLabel(string newName) 
+  
+        private void ViewButton_Click(object sender, EventArgs e)
         {
-            OriginalName.Text = newName;
+            mViewButtonListener.onViewButtonClick(currentItem, this);
+            setButtonsEnabled(false);
+            
+            // We need this for MouseWheel event handling. See above remark.
+            mParentForm.Focus();
+            
         }
+
+        private void setButtonsEnabled(Boolean state)
+        {
+            RackButton.Enabled = state;
+            RackSubButton.Enabled = state;
+            ViewButton.Enabled = state;
+
+            RackButton.Visible = state;
+            RackSubButton.Visible = state;
+            ViewButton.Visible = state;
+
+            if (state)
+            {
+                this.BackColor = Color.FromArgb(64,64,64);
+                HolderLabel.ForeColor = Color.White;
+            }
+            else { 
+                this.BackColor = Color.LightGray;
+                HolderLabel.ForeColor = Color.DimGray;
+            }
+        }
+
+
+        /*
+         * 
+         *  Public methods that are used for calling from the parent form or control 
+         * 
+         */
+
+        public void RenameLabel(string newName) { HolderLabel.Text = newName; }
+
+        public void RestoreOriginalState()
+        {
+            setButtonsEnabled(true);
+            HolderLabel.Text = currentItem.getOriginalName();
+            
+        }
+
 
         /*
          * 
@@ -108,14 +127,7 @@ namespace ImageRenamer
         public interface OnRackSubButtonListener { void onRackSubButtonClick(ImageItem mItem, ImageHolder reference); }
         public interface OnViewButtonListener { void onViewButtonClick(ImageItem mItem, ImageHolder reference); }
 
-        // MUST fix not placing in center behavior and add dynamic resize of the ImageHolder,
-        // because prefix names can be broader than the width of the ImageHolder
-        // and in this case the label should expand the text and resize the Holder.
-        private void OriginalName_TextChanged(object sender, EventArgs e)
-        {
-            
-            OriginalName.Left = ((200 - OriginalName.Width) / 2);
-        }
+        
        
     }
 }

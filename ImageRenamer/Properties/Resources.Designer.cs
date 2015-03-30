@@ -93,6 +93,16 @@ namespace ImageRenamer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap clear_selection {
+            get {
+                object obj = ResourceManager.GetObject("clear-selection", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap image_panel_background {
             get {
                 object obj = ResourceManager.GetObject("image-panel-background", resourceCulture);

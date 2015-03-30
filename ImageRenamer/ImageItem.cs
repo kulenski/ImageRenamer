@@ -26,7 +26,7 @@ namespace ImageRenamer
         public void setNewName(String prefix, String newName)
         {
             if (newName == null || prefix == null) throw new ArgumentNullException("New name cannot be null");
-            this.NewName = prefix + "_" + newName;
+            this.NewName = prefix + newName;
             this.NewPath = System.IO.Directory.GetParent(this.OriginalPath) + "\\" + this.NewName;
             
         }
