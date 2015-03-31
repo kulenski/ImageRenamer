@@ -27,6 +27,8 @@ namespace ImageRenamer
         private int RackCount = 0;
         private int RackSubCount = 0;
         private const Boolean IsView = true;
+        //private const DefaultSelectionColor = Color.
+        //private Color SelectionColor;
         //private BackgroundWorker ImageLoader;
         //private WaitForm mWaitForm;
         private String FilePrefix = "";
@@ -131,56 +133,13 @@ namespace ImageRenamer
         /*
          *  UI events
          */
-        private void OpenFolderButton_Click(object sender, EventArgs e)
-        {
-            FolderBrowserDialog mDialog = new FolderBrowserDialog();
-            mDialog.RootFolder = Environment.SpecialFolder.Desktop;
-            mDialog.Description = "Избери папка със снимки";
-            mDialog.ShowDialog();
-
-            // No directory is selected
-            if (mDialog.SelectedPath.Equals("")) {
-                MessageBox.Show("Не сте избрали папка!");
-            // Directory contains no files
-            } else if (Directory.GetFiles(mDialog.SelectedPath).Length == 0) {
-                MessageBox.Show("Избраната папка не съдържа файлове!");
-            // Oh yes, everything is fine!
-            } else { 
-                SelectedFolder = mDialog.SelectedPath;
-                updateWindowTitle(SelectedFolder);
-                PopulateControls(SelectedFolder);
-                //mWaitForm.Show();
-                //ImageLoader.RunWorkerAsync();
-            }
-        }
-
-        private void RenameButton_Click(object sender, EventArgs e)
-        {
-            // Disable clear button, because there's no turning back after rename.
-            ClearSelectionButton.Enabled = false;
-            int i = PerformRename();
-            if (i > 0) MessageBox.Show(i + " файлове бяха преименувани!");
-
-        }
-
-        private void ClearSelection_Click(object sender, EventArgs e)
-        {
-            mRenameFileList.Clear();
-            foreach (ImageHolder mImageHolder in FlowImagePanel.Controls)
-            {
-                mImageHolder.RestoreOriginalState();
-            }
-            
-            // reset counters
-            RackCount = 0; RackSubCount = 0; ViewCount = 0;
-        }
-
+       
         // Logic here is simple, if you change prefix, then the counters are reset.
         // This is useful when we have images for more than one room for example
         // and each room has different prefix!
 
         private void PrefixBox_Leave(object sender, EventArgs e)
-        {   
+        {
             if (!PrefixBox.Text.Equals(FilePrefix))
             {
                 RackCount = 0; RackSubCount = 0; ViewCount = 0;
@@ -192,7 +151,85 @@ namespace ImageRenamer
                 }
                 else FilePrefix = "";
             }
+
+        }
+
+        private void OpenFolderButton_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog mDialog = new FolderBrowserDialog();
+            mDialog.RootFolder = Environment.SpecialFolder.Desktop;
+            mDialog.Description = "Избери папка със снимки";
+            mDialog.ShowDialog();
+
+            // No directory is selected
+            if (mDialog.SelectedPath.Equals(""))
+            {
+                MessageBox.Show("Не сте избрали папка!");
+                // Directory contains no files
+            }
+            else if (Directory.GetFiles(mDialog.SelectedPath).Length == 0)
+            {
+                MessageBox.Show("Избраната папка не съдържа файлове!");
+                // Oh yes, everything is fine!
+            }
+            else
+            {
+                SelectedFolder = mDialog.SelectedPath;
+                updateWindowTitle(SelectedFolder);
+                PopulateControls(SelectedFolder);
+                //mWaitForm.Show();
+                //ImageLoader.RunWorkerAsync();
+            }
+        }
+
+        private void RenameButton_Click(object sender, EventArgs e)
+        {
+            if (mRenameFileList.Count > 0)
+            {
+                // Disable clear button, because there's no turning back after rename.
+                ClearSelectionButton.Enabled = false;
+                int i = PerformRename();
+                if (i > 0) MessageBox.Show(i + " файлове бяха преименувани!");
+            }
+        }
+
+        private void ClearSelection_Click(object sender, EventArgs e)
+        {
+            if (mRenameFileList.Count > 0) {
+                mRenameFileList.Clear();
+                foreach (ImageHolder mImageHolder in FlowImagePanel.Controls)
+                {
+                    mImageHolder.RestoreOriginalState();
+                }
+
+                // reset counters
+                RackCount = 0; RackSubCount = 0; ViewCount = 0;
+            }
             
+        }
+
+        private void UndoButton_Click(object sender, EventArgs e)
+        {
+            int itemCount = mRenameFileList.Count;
+            if (itemCount == 0)
+            {
+                MessageBox.Show("Няма повече стъпки назад!");
+                return;
+            }
+
+            ImageItem mItem = mRenameFileList[itemCount-1];
+            foreach (ImageHolder mHolderItem in FlowImagePanel.Controls)
+            {
+                if (mHolderItem.ItemsAreEqual(mItem))
+                {
+                    mHolderItem.RestoreOriginalState();
+                    break;
+                }
+            }
+            mRenameFileList.RemoveAt(itemCount-1);
+            
+            // reset counters
+            //TODO
         }
 
        #endregion
@@ -288,7 +325,7 @@ namespace ImageRenamer
                     FlowImagePanel.Controls.Add(new ImageHolder(mInitialFileList[i],this));
                     i++;
                 }
-                catch (OutOfMemoryException e) { 
+                catch (OutOfMemoryException ex) { 
                     MessageBox.Show("Тръде много снимки. Не достига памет!");
                     break;
                 }
@@ -310,8 +347,9 @@ namespace ImageRenamer
                     File.Move(mItem.getOriginalPath(), mItem.getNewPath());
                     counter++;
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
+                    
                     MessageBox.Show("Съществува файл с такова име: " + mItem.getNewPath());
                     counter--;
                 }
@@ -327,7 +365,8 @@ namespace ImageRenamer
 
         #endregion
 
-      
+
+    
 
         
     }

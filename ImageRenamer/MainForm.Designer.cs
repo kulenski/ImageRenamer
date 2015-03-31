@@ -34,6 +34,7 @@
             this.OpenFolderButton = new System.Windows.Forms.Button();
             this.RenameButton = new System.Windows.Forms.Button();
             this.ClearSelectionButton = new System.Windows.Forms.Button();
+            this.UndoButton = new System.Windows.Forms.Button();
             this.FlowButtonsPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -56,6 +57,7 @@
             this.FlowButtonsPanel.Controls.Add(this.PrefixBox);
             this.FlowButtonsPanel.Controls.Add(this.OpenFolderButton);
             this.FlowButtonsPanel.Controls.Add(this.RenameButton);
+            this.FlowButtonsPanel.Controls.Add(this.UndoButton);
             this.FlowButtonsPanel.Controls.Add(this.ClearSelectionButton);
             this.FlowButtonsPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.FlowButtonsPanel.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
@@ -88,7 +90,7 @@
             this.OpenFolderButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.OpenFolderButton.Location = new System.Drawing.Point(238, 3);
             this.OpenFolderButton.Name = "OpenFolderButton";
-            this.OpenFolderButton.Size = new System.Drawing.Size(140, 50);
+            this.OpenFolderButton.Size = new System.Drawing.Size(100, 50);
             this.OpenFolderButton.TabIndex = 7;
             this.OpenFolderButton.Text = "Отвори папка";
             this.OpenFolderButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -100,9 +102,9 @@
             // 
             this.RenameButton.Image = global::ImageRenamer.Properties.Resources.save_icon;
             this.RenameButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.RenameButton.Location = new System.Drawing.Point(384, 3);
+            this.RenameButton.Location = new System.Drawing.Point(344, 3);
             this.RenameButton.Name = "RenameButton";
-            this.RenameButton.Size = new System.Drawing.Size(140, 50);
+            this.RenameButton.Size = new System.Drawing.Size(105, 50);
             this.RenameButton.TabIndex = 6;
             this.RenameButton.Text = "Преименувай";
             this.RenameButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -113,14 +115,26 @@
             // 
             this.ClearSelectionButton.Image = global::ImageRenamer.Properties.Resources.clear_selection;
             this.ClearSelectionButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.ClearSelectionButton.Location = new System.Drawing.Point(530, 3);
+            this.ClearSelectionButton.Location = new System.Drawing.Point(536, 3);
             this.ClearSelectionButton.Name = "ClearSelectionButton";
-            this.ClearSelectionButton.Size = new System.Drawing.Size(140, 50);
+            this.ClearSelectionButton.Size = new System.Drawing.Size(115, 50);
             this.ClearSelectionButton.TabIndex = 8;
             this.ClearSelectionButton.Text = "Изчисти селекция";
             this.ClearSelectionButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.ClearSelectionButton.UseVisualStyleBackColor = true;
             this.ClearSelectionButton.Click += new System.EventHandler(this.ClearSelection_Click);
+            // 
+            // UndoButton
+            // 
+            this.UndoButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.UndoButton.Location = new System.Drawing.Point(455, 3);
+            this.UndoButton.Name = "UndoButton";
+            this.UndoButton.Size = new System.Drawing.Size(75, 50);
+            this.UndoButton.TabIndex = 9;
+            this.UndoButton.Text = "Върни стъпка";
+            this.UndoButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.UndoButton.UseVisualStyleBackColor = true;
+            this.UndoButton.Click += new System.EventHandler(this.UndoButton_Click);
             // 
             // MainForm
             // 
@@ -155,6 +169,7 @@
         private System.Windows.Forms.FlowLayoutPanel FlowButtonsPanel;
         private System.Windows.Forms.Button OpenFolderButton;
         private System.Windows.Forms.Button ClearSelectionButton;
+        private System.Windows.Forms.Button UndoButton;
 
     }
 }

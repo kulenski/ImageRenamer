@@ -116,6 +116,11 @@ namespace ImageRenamer
             
         }
 
+        public Boolean ItemsAreEqual(ImageItem item)
+        {
+           return (item != null) ? currentItem.getOriginalName().Equals(item.getOriginalName()) : false;
+        }
+
 
         /*
          * 
