@@ -28,7 +28,7 @@ namespace ImageRenamer
         private int RackSubCount = 0;
         private const Boolean IsView = true;
         //private BackgroundWorker ImageLoader;
-        private WaitForm mWaitForm;
+        //private WaitForm mWaitForm;
         private String FilePrefix = "";
 
         public MainForm()
@@ -40,11 +40,7 @@ namespace ImageRenamer
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            // We are starting our application in Maximized mode, but
-            // resize event is not fired for some reason, so we need
-            // to do this manually here to ensure proper layout arrangement.
-            MainForm_Resize(sender, e);
-
+           
             mInitialFileList = new List<ImageItem>();
             mRenameFileList = new List<ImageItem>();
 
@@ -64,13 +60,27 @@ namespace ImageRenamer
             //e.Graphics.FillRectangle(mBrush, this.ClientRectangle);
         }
 
+        private void MainForm_Shown(object sender, EventArgs e)
+        {
+            // We are starting our application in Maximized mode, but
+            // resize event is not fired for some reason, so we need
+            // to do this manually here to ensure proper layout arrangement.
+            MainForm_Resize(sender, e);
+
+
+        }
+
         // Performs dynamic arrangement of the UI controls
         private void MainForm_Resize(object sender, EventArgs e)
         {
-            this.Invalidate();
-            FlowImagePanel.Height = MainForm.ActiveForm.Height - FlowImagePanel.Top - 40;
-            FlowImagePanel.Width = MainForm.ActiveForm.Width - FlowImagePanel.Left - 20;
-            FlowButtonsPanel.Width = MainForm.ActiveForm.Width;
+            try
+            {
+                this.Invalidate();
+                FlowImagePanel.Height = MainForm.ActiveForm.Height - FlowImagePanel.Top - 40;
+                FlowImagePanel.Width = MainForm.ActiveForm.Width - FlowImagePanel.Left - 20;
+                FlowButtonsPanel.Width = MainForm.ActiveForm.Width;
+            }
+            catch (Exception ex) { }
 
             //int HolderDifferential = MainForm.ActiveForm.Width % 262;
             //int HolderMultiplier = 0;
@@ -316,6 +326,8 @@ namespace ImageRenamer
         }
 
         #endregion
+
+      
 
         
     }
