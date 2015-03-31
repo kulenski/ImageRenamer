@@ -23,14 +23,11 @@ namespace ImageRenamer
     {
         private String SelectedFolder = "";
         private List<ImageItem> mInitialFileList, mRenameFileList;
+        private Stack<int> RackHistory, RackSubHistory, ViewHistory;
         private int ViewCount = 0;
         private int RackCount = 0;
         private int RackSubCount = 0;
         private const Boolean IsView = true;
-        //private const DefaultSelectionColor = Color.
-        //private Color SelectionColor;
-        //private BackgroundWorker ImageLoader;
-        //private WaitForm mWaitForm;
         private String FilePrefix = "";
 
         public MainForm()
@@ -45,21 +42,12 @@ namespace ImageRenamer
            
             mInitialFileList = new List<ImageItem>();
             mRenameFileList = new List<ImageItem>();
+            RackHistory = new Stack<int>();
+            RackSubHistory = new Stack<int>();
+            ViewHistory = new Stack<int>();
 
             //MouseWheel
             Application.AddMessageFilter(this);
-
-            //ImageLoader = new BackgroundWorker();
-            //ImageLoader.DoWork += new DoWorkEventHandler(this.ImageLoader_DoWork);
-
-            //mWaitForm = new WaitForm();
-        }
-
-        private void MainForm_Paint(object sender, PaintEventArgs e)
-        {
-            // These lines draw Gradient
-            //LinearGradientBrush mBrush = new LinearGradientBrush(this.ClientRectangle, Color.WhiteSmoke, Color.SteelBlue, 90F);
-            //e.Graphics.FillRectangle(mBrush, this.ClientRectangle);
         }
 
         private void MainForm_Shown(object sender, EventArgs e)
@@ -83,13 +71,6 @@ namespace ImageRenamer
                 FlowButtonsPanel.Width = MainForm.ActiveForm.Width;
             }
             catch (Exception ex) { }
-
-            //int HolderDifferential = MainForm.ActiveForm.Width % 262;
-            //int HolderMultiplier = 0;
-            //while (HolderMultiplier * 262 < MainForm.ActiveForm.Width) HolderMultiplier++;
-
-            //FlowImagePanel.Margin = new Padding((HolderDifferential / HolderMultiplier));
-            //MessageBox.Show(FlowImagePanel.Margin.ToString());
         }
         
        #region MouseWheel hack
@@ -187,7 +168,7 @@ namespace ImageRenamer
             if (mRenameFileList.Count > 0)
             {
                 // Disable clear button, because there's no turning back after rename.
-                ClearSelectionButton.Enabled = false;
+                ClearChangesButton.Enabled = false;
                 int i = PerformRename();
                 if (i > 0) MessageBox.Show(i + " файлове бяха преименувани!");
             }
@@ -202,7 +183,8 @@ namespace ImageRenamer
                     mImageHolder.RestoreOriginalState();
                 }
 
-                // reset counters
+                // Handle the counters
+                RackHistory.Clear(); RackSubHistory.Clear(); ViewHistory.Clear();
                 RackCount = 0; RackSubCount = 0; ViewCount = 0;
             }
             
@@ -227,9 +209,11 @@ namespace ImageRenamer
                 }
             }
             mRenameFileList.RemoveAt(itemCount-1);
-            
-            // reset counters
-            //TODO
+
+            // Handle the counters
+            RackCount = RackHistory.Pop();
+            RackSubCount = RackSubHistory.Pop();
+            ViewCount = ViewHistory.Pop();
         }
 
        #endregion
@@ -274,26 +258,22 @@ namespace ImageRenamer
          * Functions
          */
 
-
-        //private void ImageLoader_DoWork(object sender, DoWorkEventArgs e)
-        //{
-        //    BackgroundWorker worker = sender as BackgroundWorker;
-        //    PopulateControls(SelectedFolder);
-        //}
-
-        //private void ImageLoader_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        //{
-        //    mWaitForm.HideWaitForm();
-        //}
-
-
         private void updateItem(ImageItem mItem, ImageHolder holder, Boolean isView) {
 
             if (isView) mItem.setNewName(FilePrefix, "View" + ViewCount + ".jpg");
             else mItem.setNewName(FilePrefix, RackCount + "." + RackSubCount + ".jpg");
 
+            // Update holder and renamelist
             holder.RenameLabel(mItem.getNewName());
             mRenameFileList.Add(mItem);
+            
+            // Leave counter history trace
+            // We use Stack datatype, because we need this only in Undo functions
+            // which behave exactly like stack.. pulls the last added counter and
+            // removes the item.
+            RackHistory.Push(RackCount);
+            RackSubHistory.Push(RackSubCount-1);
+            ViewHistory.Push(ViewCount);
         }
 
         private void PopulateControls(string FolderPath)
@@ -333,7 +313,7 @@ namespace ImageRenamer
             }
 
             // Enable clear button
-            ClearSelectionButton.Enabled = true;
+            ClearChangesButton.Enabled = true;
         }
 
         public int PerformRename()
@@ -363,11 +343,6 @@ namespace ImageRenamer
             MainForm.ActiveForm.Text = "ImageRenamer: " + title;
         }
 
-        #endregion
-
-
-    
-
-        
+        #endregion 
     }
 }

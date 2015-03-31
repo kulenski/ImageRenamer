@@ -32,9 +32,9 @@
             this.FlowButtonsPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.PrefixBox = new System.Windows.Forms.TextBox();
             this.OpenFolderButton = new System.Windows.Forms.Button();
-            this.RenameButton = new System.Windows.Forms.Button();
-            this.ClearSelectionButton = new System.Windows.Forms.Button();
             this.UndoButton = new System.Windows.Forms.Button();
+            this.ClearChangesButton = new System.Windows.Forms.Button();
+            this.RenameButton = new System.Windows.Forms.Button();
             this.FlowButtonsPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -56,9 +56,9 @@
             this.FlowButtonsPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.FlowButtonsPanel.Controls.Add(this.PrefixBox);
             this.FlowButtonsPanel.Controls.Add(this.OpenFolderButton);
-            this.FlowButtonsPanel.Controls.Add(this.RenameButton);
             this.FlowButtonsPanel.Controls.Add(this.UndoButton);
-            this.FlowButtonsPanel.Controls.Add(this.ClearSelectionButton);
+            this.FlowButtonsPanel.Controls.Add(this.ClearChangesButton);
+            this.FlowButtonsPanel.Controls.Add(this.RenameButton);
             this.FlowButtonsPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.FlowButtonsPanel.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
             this.FlowButtonsPanel.Location = new System.Drawing.Point(0, 0);
@@ -88,53 +88,56 @@
             // 
             this.OpenFolderButton.Image = global::ImageRenamer.Properties.Resources.open_icon;
             this.OpenFolderButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.OpenFolderButton.Location = new System.Drawing.Point(238, 3);
+            this.OpenFolderButton.Location = new System.Drawing.Point(238, 7);
+            this.OpenFolderButton.Margin = new System.Windows.Forms.Padding(3, 7, 3, 3);
             this.OpenFolderButton.Name = "OpenFolderButton";
-            this.OpenFolderButton.Size = new System.Drawing.Size(100, 50);
+            this.OpenFolderButton.Size = new System.Drawing.Size(115, 42);
             this.OpenFolderButton.TabIndex = 7;
             this.OpenFolderButton.Text = "Отвори папка";
-            this.OpenFolderButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.OpenFolderButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.OpenFolderButton.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.OpenFolderButton.UseVisualStyleBackColor = true;
             this.OpenFolderButton.Click += new System.EventHandler(this.OpenFolderButton_Click);
+            // 
+            // UndoButton
+            // 
+            this.UndoButton.Image = global::ImageRenamer.Properties.Resources.undo_button;
+            this.UndoButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.UndoButton.Location = new System.Drawing.Point(359, 7);
+            this.UndoButton.Margin = new System.Windows.Forms.Padding(3, 7, 3, 3);
+            this.UndoButton.Name = "UndoButton";
+            this.UndoButton.Size = new System.Drawing.Size(115, 42);
+            this.UndoButton.TabIndex = 9;
+            this.UndoButton.Text = "Върни стъпка";
+            this.UndoButton.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.UndoButton.UseVisualStyleBackColor = true;
+            this.UndoButton.Click += new System.EventHandler(this.UndoButton_Click);
+            // 
+            // ClearChangesButton
+            // 
+            this.ClearChangesButton.Image = global::ImageRenamer.Properties.Resources.clear_selection;
+            this.ClearChangesButton.Location = new System.Drawing.Point(480, 7);
+            this.ClearChangesButton.Margin = new System.Windows.Forms.Padding(3, 7, 3, 3);
+            this.ClearChangesButton.Name = "ClearChangesButton";
+            this.ClearChangesButton.Size = new System.Drawing.Size(115, 42);
+            this.ClearChangesButton.TabIndex = 8;
+            this.ClearChangesButton.Text = "Първоначален вид";
+            this.ClearChangesButton.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.ClearChangesButton.UseVisualStyleBackColor = true;
+            this.ClearChangesButton.Click += new System.EventHandler(this.ClearSelection_Click);
             // 
             // RenameButton
             // 
             this.RenameButton.Image = global::ImageRenamer.Properties.Resources.save_icon;
             this.RenameButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.RenameButton.Location = new System.Drawing.Point(344, 3);
+            this.RenameButton.Location = new System.Drawing.Point(601, 7);
+            this.RenameButton.Margin = new System.Windows.Forms.Padding(3, 7, 3, 3);
             this.RenameButton.Name = "RenameButton";
-            this.RenameButton.Size = new System.Drawing.Size(105, 50);
+            this.RenameButton.Size = new System.Drawing.Size(115, 42);
             this.RenameButton.TabIndex = 6;
             this.RenameButton.Text = "Преименувай";
-            this.RenameButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.RenameButton.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.RenameButton.UseVisualStyleBackColor = true;
             this.RenameButton.Click += new System.EventHandler(this.RenameButton_Click);
-            // 
-            // ClearSelectionButton
-            // 
-            this.ClearSelectionButton.Image = global::ImageRenamer.Properties.Resources.clear_selection;
-            this.ClearSelectionButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.ClearSelectionButton.Location = new System.Drawing.Point(536, 3);
-            this.ClearSelectionButton.Name = "ClearSelectionButton";
-            this.ClearSelectionButton.Size = new System.Drawing.Size(115, 50);
-            this.ClearSelectionButton.TabIndex = 8;
-            this.ClearSelectionButton.Text = "Изчисти селекция";
-            this.ClearSelectionButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.ClearSelectionButton.UseVisualStyleBackColor = true;
-            this.ClearSelectionButton.Click += new System.EventHandler(this.ClearSelection_Click);
-            // 
-            // UndoButton
-            // 
-            this.UndoButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.UndoButton.Location = new System.Drawing.Point(455, 3);
-            this.UndoButton.Name = "UndoButton";
-            this.UndoButton.Size = new System.Drawing.Size(75, 50);
-            this.UndoButton.TabIndex = 9;
-            this.UndoButton.Text = "Върни стъпка";
-            this.UndoButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.UndoButton.UseVisualStyleBackColor = true;
-            this.UndoButton.Click += new System.EventHandler(this.UndoButton_Click);
             // 
             // MainForm
             // 
@@ -153,7 +156,6 @@
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.Shown += new System.EventHandler(this.MainForm_Shown);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.MainForm_Paint);
             this.Resize += new System.EventHandler(this.MainForm_Resize);
             this.FlowButtonsPanel.ResumeLayout(false);
             this.FlowButtonsPanel.PerformLayout();
@@ -168,7 +170,7 @@
         private System.Windows.Forms.Button RenameButton;
         private System.Windows.Forms.FlowLayoutPanel FlowButtonsPanel;
         private System.Windows.Forms.Button OpenFolderButton;
-        private System.Windows.Forms.Button ClearSelectionButton;
+        private System.Windows.Forms.Button ClearChangesButton;
         private System.Windows.Forms.Button UndoButton;
 
     }

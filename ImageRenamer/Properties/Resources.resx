@@ -127,8 +127,8 @@
   <data name="open-icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\open-icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="image-panel-background" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\image-panel-background.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="AddRackSubButtonIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\AddRackSubButtonIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="nav-panel-background1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\nav-panel-background1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -136,8 +136,11 @@
   <data name="nav-panel-background" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\nav-panel-background.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="AddRackSubButtonIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\AddRackSubButtonIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="image-panel-background" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\image-panel-background.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="clear-selection" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\clear-selection.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="AddRackButtonIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\AddRackButtonIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -145,7 +148,7 @@
   <data name="AddViewButtonIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\AddViewButtonIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="clear-selection" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\clear-selection.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="undo_button" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\undo_button.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
