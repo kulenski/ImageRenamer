@@ -1,4 +1,4 @@
-﻿namespace ImageRenamer
+﻿namespace eu.kulenski.appkitchen.ImageRenamer
 {
     partial class WaitForm
     {

@@ -4,10 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ImageRenamer
-{
-    static class Program
-    {
+namespace eu.kulenski.appkitchen.ImageRenamer {
+    static class Program {
 
         /// <summary>
         /// The main entry point for the application.
@@ -15,8 +13,7 @@ namespace ImageRenamer
         /// 
 
         [STAThread]
-        static void Main()
-        {
+        static void Main() {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());

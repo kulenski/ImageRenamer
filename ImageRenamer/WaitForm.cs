@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace ImageRenamer
+namespace eu.kulenski.appkitchen.ImageRenamer
 {
     public partial class WaitForm : Form
     {

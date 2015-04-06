@@ -1,4 +1,4 @@
-﻿namespace ImageRenamer
+﻿namespace eu.kulenski.appkitchen.ImageRenamer
 {
     partial class ImageHolder
     {
@@ -48,7 +48,7 @@
             // 
             // RackSubButton
             // 
-            this.RackSubButton.Image = global::ImageRenamer.Properties.Resources.AddRackSubButtonIcon;
+            this.RackSubButton.Image = global::eu.kulenski.appkitchen.ImageRenamer.Properties.Resources.AddRackSubButtonIcon;
             this.RackSubButton.Location = new System.Drawing.Point(109, 88);
             this.RackSubButton.Name = "RackSubButton";
             this.RackSubButton.Size = new System.Drawing.Size(48, 48);
@@ -58,7 +58,7 @@
             // 
             // ViewButton
             // 
-            this.ViewButton.Image = global::ImageRenamer.Properties.Resources.AddViewButtonIcon;
+            this.ViewButton.Image = global::eu.kulenski.appkitchen.ImageRenamer.Properties.Resources.AddViewButtonIcon;
             this.ViewButton.Location = new System.Drawing.Point(165, 88);
             this.ViewButton.Name = "ViewButton";
             this.ViewButton.Size = new System.Drawing.Size(48, 48);
@@ -69,7 +69,7 @@
             // RackButton
             // 
             this.RackButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.RackButton.Image = global::ImageRenamer.Properties.Resources.AddRackButtonIcon;
+            this.RackButton.Image = global::eu.kulenski.appkitchen.ImageRenamer.Properties.Resources.AddRackButtonIcon;
             this.RackButton.Location = new System.Drawing.Point(53, 88);
             this.RackButton.Name = "RackButton";
             this.RackButton.Size = new System.Drawing.Size(48, 48);
