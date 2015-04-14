@@ -31,7 +31,7 @@ namespace eu.kulenski.appkitchen.ImageRenamer {
             if (mItem != null) {
                 HolderLabel.Text = mItem.getOriginalName();
                 this.currentItem = mItem;
-                LoadImage();
+                PictureBox.Image = currentItem.getThumbnail(256,256);
             }
 
             // Assign listeners
@@ -39,15 +39,6 @@ namespace eu.kulenski.appkitchen.ImageRenamer {
             this.mRackSubButtonListener = (OnRackSubButtonListener)mParentForm;
             this.mViewButtonListener = (OnViewButtonListener)mParentForm; 
         }
-
-
-        private void LoadImage() {
-            Bitmap mBitmap = new Bitmap(currentItem.getOriginalPath());
-            Bitmap resizedBitmap = new Bitmap(mBitmap, new Size(256, 256));
-            PictureBox.Image = resizedBitmap;
-            mBitmap.Dispose();
-        }
-
       
         private void RackButton_Click(object sender, EventArgs e) {
             mRackButtonListener.onRackButtonClick(currentItem, this);

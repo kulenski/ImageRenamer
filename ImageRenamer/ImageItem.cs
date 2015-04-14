@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,5 +34,14 @@ namespace eu.kulenski.appkitchen.ImageRenamer {
         public String getOriginalPath() { return this.OriginalPath; }
 
         public String getOriginalName() { return this.OriginalName; }
+
+        public Bitmap getThumbnail(int x, int y) {
+            Bitmap mImage = new Bitmap(this.OriginalPath);
+            Bitmap mThumbnail = new Bitmap(mImage, new Size(x, y));
+            mImage.Dispose();
+            return mThumbnail;
+        }
+
+
     }
 }

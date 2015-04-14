@@ -144,10 +144,17 @@ namespace eu.kulenski.appkitchen.ImageRenamer {
         }
 
         private void RenameButton_Click(object sender, EventArgs e) {
+            Boolean compress = false;
             if (mRenameFileList.Count > 0) {
                 // Disable clear button, because there's no turning back after rename.
                 ClearChangesButton.Enabled = false;
-                int i = PerformRename();
+
+                // Ask users if they want to compress
+                if (MessageBox.Show("Искате ли да компресирате снимките?", "Компресиране?", MessageBoxButtons.YesNo) == DialogResult.Yes) {
+                    compress = true;
+                }
+
+                int i = PerformRenameAndCompress(compress);
                 if (i > 0) MessageBox.Show(i + " файлове бяха преименувани!");
             }
         }
@@ -237,8 +244,9 @@ namespace eu.kulenski.appkitchen.ImageRenamer {
 
         private void updateItem(ImageItem item, ImageHolder holder, ImageHolder.ClickType type) {
 
-            if (type.Equals(ImageHolder.ClickType.View)) item.setNewName(FilePrefix, "View" + ViewCount + ".jpg");
-            else item.setNewName(FilePrefix, RackCount + "." + RackSubCount + ".jpg");
+            if (type.Equals(ImageHolder.ClickType.View)) 
+                item.setNewName(FilePrefix,"View" + IntFormat(ViewCount) + ".jpg");
+            else item.setNewName(FilePrefix, IntFormat(RackCount) + "." + RackSubCount + ".jpg");
 
             // Update holder and renamelist
             holder.RenameLabel(item.getNewName());
@@ -286,12 +294,13 @@ namespace eu.kulenski.appkitchen.ImageRenamer {
             ClearChangesButton.Enabled = true;
         }
 
-        public int PerformRename() {
+        public int PerformRenameAndCompress(Boolean compress) {
            int counter = 0;
            foreach (ImageItem mItem in mRenameFileList) {
         
                 try {
                     File.Move(mItem.getOriginalPath(), mItem.getNewPath());
+                    if (compress == true) ImageCompressor.Compress(mItem, "compressed");
                     counter++;
                 } catch (Exception ex) {
                     MessageBox.Show("Съществува файл с такова име: " + mItem.getNewPath());
@@ -304,6 +313,13 @@ namespace eu.kulenski.appkitchen.ImageRenamer {
 
         private void updateWindowTitle(string title) {
             MainForm.ActiveForm.Text = "ImageRenamer: " + title;
+        }
+
+        // Format 1 to 9 to be 01 - 09
+        private String IntFormat(int i) {
+            if (i >= 1 && i <= 9) {
+                return "0" + i.ToString();
+            } else return i.ToString();
         }
 
         #endregion 
